@@ -8,7 +8,7 @@ state("Blasphemous 2", "1.0.5")
 
 start
 {
-    return false;
+    return current.roomHash == 0 && old.isPlaying && !current.isPlaying;
 }
 
 split
