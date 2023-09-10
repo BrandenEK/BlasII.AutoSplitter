@@ -14,12 +14,16 @@ start
 split
 {
     return false;
+    
+    bool beatBoss = current.enemyCount == 0 && old.enemyCount > 0 && vars.bossRooms.ContainsKey(current.roomHash) && settings["b" + vars.bossRooms[current.roomHash]];
+    return beatBoss;
 }
 
 isLoading
 {
     return false;
-    //return !current.isPlaying || current.roomHash == 0;
+    
+    return !current.isPlaying || current.roomHash == 0;
 }
 
 startup
@@ -28,18 +32,30 @@ startup
     print("BlasII initialization");
     print("==========");
     
+    vars.bossRooms = new Dictionary<uint, string>()
+    {
+        { 0x4D00F491, "Faceless One" },
+        { 0x07B20B3D, "Radames" },
+        { 0xAA597F36, "Orospina" },
+        { 0x07B20A5A, "Lesmes" },
+        { 0x5DD4E45B, "Afilaor" },
+        { 0xF8126136, "Benedicta" },
+        { 0xF8126154, "Odon" },
+        { 0x556AEC39, "Sinodo" },
+        { 0x556AEC59, "Svsona" },
+        { 0x9AB9D533, "Eviterno" },
+        { 0x9AB9D532, "Devotion Incarnate" },
+    };
+    
+    // Add boss header
     settings.Add("bosses", true, "Bosses (Not implemented yet)");
-    settings.Add("BS11", false, "Faceless One", "bosses");
-    settings.Add("BS01", false, "Radames", "bosses");
-    settings.Add("BS02", false, "Orospina", "bosses");
-    settings.Add("BS03", false, "Lesmes", "bosses");
-    settings.Add("BS04", false, "Afilaor", "bosses");
-    settings.Add("BS05", false, "Benedicta", "bosses");
-    settings.Add("BS06", false, "Odon", "bosses");
-    settings.Add("BS08", false, "Sinodo", "bosses");
-    settings.Add("BS07", false, "Svsona", "bosses");
-    settings.Add("BS20", false, "Eviterno", "bosses");
-    settings.Add("BS21", false, "Devotion Incarnate", "bosses");
+    settings.CurrentDefaultParent = "bosses";
+    
+    // Add all bosses
+    foreach (string boss in vars.bossRooms.Values)
+    {
+        settings.Add("b" + boss, false, boss);
+    }
 }
 
 init
