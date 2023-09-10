@@ -2,12 +2,14 @@
 state("Blasphemous 2", "1.0.5")
 {
     bool isPlaying : "GameAssembly.dll", 0x03596918, 0x03D0, 0x07F0, 0x28, 0x0760;
-    uint roomHash : "GameAssembly.dll", 0x0336A6F0, 0xB8, 0x0490, 0x0338, 0x00;
+    uint roomHash : "GameAssembly.dll", 0x0336A6F0, 0xB8, 0x02D0, 0x28, 0x00;
     int enemyCount : "GameAssembly.dll", 0x0336A6F0, 0xB8, 0x0548, 0xC8, 0x80;
 }
 
 start
 {
+    return false;
+
     return current.roomHash == 0 && old.isPlaying && !current.isPlaying;
 }
 
