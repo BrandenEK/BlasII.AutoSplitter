@@ -7,6 +7,19 @@ state("Blasphemous 2")
 startup
 {
 	print("Startup for BlasII");
+	
+	settings.Add("bosses", true, "Bosses (Not implemented yet)");
+	settings.Add("BS11", false, "Faceless One", "bosses");
+	settings.Add("BS01", false, "Radames", "bosses");
+	settings.Add("BS02", false, "Orospina", "bosses");
+	settings.Add("BS03", false, "Lesmes", "bosses");
+	settings.Add("BS04", false, "Afilaor", "bosses");
+	settings.Add("BS05", false, "Benedicta", "bosses");
+	settings.Add("BS06", false, "Odon", "bosses");
+	settings.Add("BS08", false, "Sinodo", "bosses");
+	settings.Add("BS07", false, "Svsona", "bosses");
+	settings.Add("BS20", false, "Eviterno", "bosses");
+	settings.Add("BS21", false, "Devotion Incarnate", "bosses");
 }
 
 isLoading
