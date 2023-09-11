@@ -1,9 +1,10 @@
 
 state("Blasphemous 2", "1.0.5")
 {
-    bool isPlaying : "GameAssembly.dll", 0x03352478, 0x40, 0x02A8, 0x0340, 0xA0;
-    uint roomHash : "GameAssembly.dll", 0x0336A6F0, 0xB8, 0x02D0, 0x28, 0x00;
-    int enemyCount : "GameAssembly.dll", 0x0336A6F0, 0xB8, 0x0548, 0xC8, 0x80;
+	bool isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0, 0x30, 0x190;
+	uint earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x270, 0x20, 0x14;
+	uint  mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28, 0x0;
+	uint  lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x150, 0x70;
 }
 
 start
@@ -23,7 +24,11 @@ split
 
 isLoading
 {
-    return !current.isPlaying || current.roomHash == 0;
+	//print("Main: " + current.mainRoom + ", Early: " + current.earlyRoom + ", Late: " + current.lateRoom);
+	print("Is loading: " + !current.isPlaying);
+	return !current.isPlaying || current.mainRoom == 0;
+	
+    return current.mainRoom == 0 || current.lateRoom != current.mainRoom;
 }
 
 startup
