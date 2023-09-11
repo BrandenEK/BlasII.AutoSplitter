@@ -3,7 +3,7 @@
 ## Variables need per version:
 
 ### isPlaying
-Start on mainmenu with a value of 1.  After selecting file, search for 0 while loading.  Once in game, search for 0 during first scene transition.  Make sure to get a few quit-outs and at least one death in the search.  Should be 0x40 bytes past a similar value, but that one stops after dying.
+Should be 1 while in game and on the menu, 0 while loading.  Prie Dieu animation is included in load.  There are 3 different roomHashes (Early, main, and late).  Get this value by searching for 0 while in between early and late changing.
 
 ### roomHash
 Go back and forth between some of these known room values.
