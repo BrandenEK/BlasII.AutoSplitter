@@ -12,10 +12,10 @@ start
 
 split
 {
-    return false;
+    bool boss = false && vars.bossSplits.ContainsKey(current.roomHash) && settings["B_" + current.roomHash];
+    bool room = false;
     
-    bool beatBoss = current.enemyCount == 0 && old.enemyCount > 0 && vars.bossRooms.ContainsKey(current.roomHash) && settings["b" + vars.bossRooms[current.roomHash]];
-    return beatBoss;
+    return boss || room;
 }
 
 isLoading
@@ -29,29 +29,44 @@ startup
     print("BlasII initialization");
     print("==========");
     
-    vars.bossRooms = new Dictionary<uint, string>()
+    vars.bossSplits = new Dictionary<uint, string>()
     {
-        { 0x4D00F491, "Faceless One" },
-        { 0x07B20B3D, "Radames" },
-        { 0xAA597F36, "Orospina" },
-        { 0x07B20A5A, "Lesmes" },
-        { 0x5DD4E45B, "Afilaor" },
-        { 0xF8126136, "Benedicta" },
-        { 0xF8126154, "Odon" },
-        { 0x556AEC39, "Sinodo" },
-        { 0x556AEC59, "Svsona" },
-        { 0x9AB9D533, "Eviterno" },
-        { 0x9AB9D532, "Devotion Incarnate" },
+        //{ 0x4D00F491, "Faceless One" },
+        //{ 0x07B20B3D, "Radames" },
+        //{ 0xAA597F36, "Orospina" },
+        //{ 0x07B20A5A, "Lesmes" },
+        //{ 0x5DD4E45B, "Afilaor" },
+        //{ 0xF8126136, "Benedicta" },
+        //{ 0xF8126154, "Odon" },
+        //{ 0x556AEC39, "Sinodo" },
+        //{ 0x556AEC59, "Svsona" },
+        //{ 0x9AB9D533, "Eviterno" },
+        //{ 0x9AB9D532, "Devotion Incarnate" },
     };
+    print("Loaded " + vars.bossSplits.Count + " bosses");
     
-    // Add boss header
-    settings.Add("bosses", true, "Bosses (Not implemented yet)");
-    settings.CurrentDefaultParent = "bosses";
-    
-    // Add all bosses
-    foreach (string boss in vars.bossRooms.Values)
+    vars.roomSplits = new Dictionary<uint, string>()
     {
-        settings.Add("b" + boss, false, boss);
+        //{ 0x00, "Crimson Rains" },
+    };
+    print("Loaded " + vars.roomSplits.Count + " rooms");
+    
+    // Add headers
+    settings.Add("bosses", true, "Bosses");
+    settings.Add("rooms", true, "Rooms");
+    
+    // Add bosses
+    settings.CurrentDefaultParent = "bosses";
+    foreach (var boss in vars.bossSplits)
+    {
+        settings.Add("B_" + boss.Key, false, boss.Value);
+    }
+    
+    // Add rooms
+    settings.CurrentDefaultParent = "rooms";
+    foreach (var room in vars.roomSplits)
+    {
+        settings.Add("R_" + room.Key, false, room.Value);
     }
 }
 
