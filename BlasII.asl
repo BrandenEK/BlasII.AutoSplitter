@@ -12,8 +12,8 @@ start
 
 split
 {
-    bool boss = false && vars.bossSplits.ContainsKey(current.roomHash) && settings["B_" + current.roomHash];
-    bool room = false;
+    bool boss = false && settings["B_" + current.roomHash];
+    bool room = current.roomHash != old.roomHash && false && settings["R_" + current.roomHash];
     
     return boss || room;
 }
