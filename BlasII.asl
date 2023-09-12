@@ -29,7 +29,7 @@ startup
     print("BlasII initialization");
     print("==========");
     
-    vars.bossSplits = new Dictionary<uint, string>()
+    var bossSplits = new Dictionary<uint, string>()
     {
         //{ 0x4D00F491, "Faceless One" },
         //{ 0x07B20B3D, "Radames" },
@@ -43,13 +43,13 @@ startup
         //{ 0x9AB9D533, "Eviterno" },
         //{ 0x9AB9D532, "Devotion Incarnate" },
     };
-    print("Loaded " + vars.bossSplits.Count + " bosses");
+    print("Loaded " + bossSplits.Count + " bosses");
     
-    vars.roomSplits = new Dictionary<uint, string>()
+    var roomSplits = new Dictionary<uint, string>()
     {
         //{ 0x00, "Crimson Rains" },
     };
-    print("Loaded " + vars.roomSplits.Count + " rooms");
+    print("Loaded " + roomSplits.Count + " rooms");
     
     // Add headers
     settings.Add("bosses", true, "Bosses");
@@ -57,14 +57,14 @@ startup
     
     // Add bosses
     settings.CurrentDefaultParent = "bosses";
-    foreach (var boss in vars.bossSplits)
+    foreach (var boss in bossSplits)
     {
         settings.Add("B_" + boss.Key, false, boss.Value);
     }
     
     // Add rooms
     settings.CurrentDefaultParent = "rooms";
-    foreach (var room in vars.roomSplits)
+    foreach (var room in roomSplits)
     {
         settings.Add("R_" + room.Key, false, room.Value);
     }
