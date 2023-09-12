@@ -1,21 +1,19 @@
 
+state("Blasphemous 2", "Unknown")
+{
+    bool   isPlaying : 0;
+    uint    roomHash : 0;
+}
+
 state("Blasphemous 2", "1.0.5")
 {
-    bool isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0, 0x30, 0x190;
-    uint  roomHash : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28, 0x0;
+    bool   isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0, 0x30, 0x190;
+    uint    roomHash : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28, 0x0;
 }
 
 start
 {
     return old.roomHash == 0 && current.roomHash != 0;
-}
-
-split
-{
-    return false;
-    
-    bool beatBoss = current.enemyCount == 0 && old.enemyCount > 0 && vars.bossRooms.ContainsKey(current.roomHash) && settings["b" + vars.bossRooms[current.roomHash]];
-    return beatBoss;
 }
 
 isLoading
@@ -25,64 +23,18 @@ isLoading
 
 startup
 {
-    print("==========");
-    print("BlasII initialization");
-    print("==========");
-    
-    vars.bossRooms = new Dictionary<uint, string>()
-    {
-        { 0x4D00F491, "Faceless One" },
-        { 0x07B20B3D, "Radames" },
-        { 0xAA597F36, "Orospina" },
-        { 0x07B20A5A, "Lesmes" },
-        { 0x5DD4E45B, "Afilaor" },
-        { 0xF8126136, "Benedicta" },
-        { 0xF8126154, "Odon" },
-        { 0x556AEC39, "Sinodo" },
-        { 0x556AEC59, "Svsona" },
-        { 0x9AB9D533, "Eviterno" },
-        { 0x9AB9D532, "Devotion Incarnate" },
-    };
-    
-    // Add boss header
-    settings.Add("bosses", true, "Bosses (Not implemented yet)");
-    settings.CurrentDefaultParent = "bosses";
-    
-    // Add all bosses
-    foreach (string boss in vars.bossRooms.Values)
-    {
-        settings.Add("b" + boss, false, boss);
-    }
+    settings.Add("bosses", true, "Bosses");
+    settings.Add("rooms", true, "Rooms");
 }
 
 init
 {   
-    ProcessModuleCollection col = game.Modules;
-    long size = 0;
-    
-    for (int i = 0; i < col.Count; i++)
-    {
-        if (col[i].ModuleName == "GameAssembly.dll")
-        {
-            print("==========");
-            print("GameAssembly.dll size: " + col[i].ModuleMemorySize);
-            print("==========");
-            
-            size = col[i].ModuleMemorySize;
-        }
-    }
-    if (size == 0)
-    {
-        print("==========");
-        print("GameAssembly.dll not found!");
-        print("==========");
-    }
+    int size = modules.First().ModuleMemorySize;
+    print("BlasII module size: " + size);
     
     switch (size)
     {
-        case 62201856:
-            version = "1.0.5"; break;
-        default:
-            version = "Unknown"; break;
+        case 675840:   version = "1.0.5";     break;
+        default:       version = "Unknown";   break;
     }
 }
