@@ -12,10 +12,19 @@ start
 
 split
 {
-    bool boss = false && settings["B_" + current.roomHash];
-    bool room = current.roomHash != old.roomHash && false && settings["R_" + current.roomHash];
+    if (false && settings["B_" + current.roomHash] && !vars.bossesKilled.Contains(current.roomHash))
+    {
+        vars.bossesKilled.Add(current.roomHash);
+        return true;
+    }
     
-    return boss || room;
+    if (current.roomHash != old.roomHash && false && settings["R_" + current.roomHash] && !vars.roomsEntered.Contains(current.roomHash))
+    {
+        vars.roomsEntered.Add(current.roomHash);
+        return true;
+    }
+    
+    return false;
 }
 
 isLoading
@@ -23,11 +32,20 @@ isLoading
     return !current.isPlaying || current.roomHash == 0;
 }
 
+onReset
+{
+    vars.killedBosses.Clear();
+    vars.roomsEntered.Clear();
+}
+
 startup
 {
     print("==========");
     print("BlasII initialization");
     print("==========");
+    
+    vars.bossesKilled = new List<uint>();
+    vars.roomsEntered = new List<uint>();
     
     var bossSplits = new Dictionary<uint, string>()
     {
