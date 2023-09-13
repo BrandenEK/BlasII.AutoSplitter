@@ -23,8 +23,8 @@ isLoading
 
 startup
 {
-    settings.Add("bosses", true, "Bosses");
-    settings.Add("rooms", true, "Rooms");
+    settings.Add("devotion", false, "Defeat Devotion Incarnate");
+    settings.Add("emery", false, "Reach Sentinel of the Emery");
 }
 
 init
