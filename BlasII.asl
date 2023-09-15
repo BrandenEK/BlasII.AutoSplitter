@@ -26,8 +26,9 @@ split
 {
     bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.enemyCount == 0 && old.enemyCount == 1 && settings["devotion"];
     bool emery = current.mainRoom == 0x5DD4E45B && old.mainRoom != 0x5DD4E45B && settings["emery"];
+    bool afilaor = current.mainRoom == 0x5DD4E45B && current.earlyRoom == 0x5DD4E45B && current.enemyCount == 0 && old.enemyCount == 1 && settings["afilaor"];
 
-    return devotion || emery;
+    return devotion || emery || afilaor;
 }
 
 isLoading
@@ -37,8 +38,12 @@ isLoading
 
 startup
 {
-    settings.Add("devotion", false, "Defeat Devotion Incarnate");
-    settings.Add("emery", false, "Reach Sentinel of the Emery");
+    settings.Add("full", true, "Any% Ending");
+    settings.Add("devotion", false, "Defeat Devotion Incarnate", "full");
+    
+    settings.Add("level", true, "Afilaor% Ending");
+    settings.Add("emery", false, "Reach Sentinel of the Emery", "level");
+    settings.Add("afilaor", false, "Defeat Afilaor", "level");
 }
 
 init
