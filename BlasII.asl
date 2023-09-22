@@ -53,6 +53,19 @@ startup
     settings.Add("level", true, "Afilaor% Ending");
     settings.Add("emery", false, "Reach Sentinel of the Emery", "level");
     settings.Add("afilaor", false, "Defeat Afilaor", "level");
+    
+    // Change timing method to game time (Not my own, taken from another autosplitter)
+    if (timer.CurrentTimingMethod == TimingMethod.GameTime)
+        return;
+    var timingMessage = MessageBox.Show (
+        "This game uses Time without Loads (Game Time) as the main timing method.\n"+
+        "LiveSplit is currently set to show Real Time (RTA).\n"+
+        "Would you like to set the timing method to Game Time?",
+        "LiveSplit | Blasphemous II",
+        MessageBoxButtons.YesNo, MessageBoxIcon.Question
+    );
+    if (timingMessage == DialogResult.Yes)
+        timer.CurrentTimingMethod = TimingMethod.GameTime;
 }
 
 init
