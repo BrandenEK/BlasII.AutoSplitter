@@ -93,38 +93,52 @@ isLoading
 
 startup
 {
-    settings.Add("bosses", true, "Boss Splits");
-    settings.Add("faceless_entry", false, "Reach The Faceless One", "bosses");
-    settings.Add("faceless", false, "Defeat The Faceless One", "bosses");
-    settings.Add("radames_entry", false, "Reach Radames", "bosses");
-    settings.Add("radames", false, "Defeat Radames", "bosses");
-    settings.Add("lesmes_entry", false, "Reach Lesmes & Infanta", "bosses");
-    settings.Add("lesmes", false, "Defeat Lesmes & Infanta", "bosses");
-    settings.Add("orospina_entry", false, "Reach Orospina", "bosses");
-    settings.Add("orospina", false, "Defeat Orospina", "bosses");
-    settings.Add("benedicta_entry", false, "Reach Benedicta", "bosses");
-    settings.Add("benedicta", false, "Defeat Benedicta", "bosses");
-    settings.Add("odon_entry", false, "Reach Odon", "bosses");
-    settings.Add("odon", false, "Defeat Odon", "bosses");
-    settings.Add("sinodo_entry", false, "Reach Sinodo", "bosses");
-    settings.Add("sinodo", false, "Defeat Sinodo", "bosses");
-    settings.Add("susona_entry", false, "Reach Susona", "bosses");
-    settings.Add("susona", false, "Defeat Susona", "bosses");
-    settings.Add("eviterno_entry", false, "Reach Eviterno", "bosses");
-    settings.Add("eviterno_p1", false, "Defeat Eviterno phase 1","bosses");
-    settings.Add("eviterno", false, "Defeat Eviterno", "bosses");
-    settings.Add("devotion_entry", false, "Reach Devotion", "bosses");
-
-    settings.Add("full", true, "Any% Ending");
-    settings.Add("devotion", false, "Defeat Devotion Incarnate", "full");
+	print("BlasII initialization");
     
-    settings.Add("level", true, "Afilaor% Ending");
-    settings.Add("emery", false, "Reach Sentinel of the Emery", "level");
-    settings.Add("afilaor", false, "Defeat Afilaor", "level");
+    vars.killedBosses = new List<uint>();
+    vars.roomsEntered = new List<uint>();
     
-
-    vars.roomsEntered = new List<string>();
-    vars.eviternoP1 = false;
+    var bossSplits = new Dictionary<uint, string>()
+    {
+        { 0x4D00F491, "Faceless One" },
+        { 0x07B20B3D, "Radames" },
+        { 0xAA597F36, "Orospina" },
+        { 0x07B20A5A, "Lesmes" },
+        { 0x5DD4E45B, "Afilaor" },
+        { 0xF8126136, "Benedicta" },
+        { 0xF8126154, "Odon" },
+        { 0x556AEC39, "Sinodo" },
+        { 0x556AEC59, "Svsona" },
+        { 0x9AB9D533, "Eviterno phase 1" },
+        { 0x00000000, "Eviterno phase 2" },
+        { 0x9AB9D532, "Devotion Incarnate" },
+    };
+    print("Loaded " + bossSplits.Count + " bosses");
+	
+	var roomSplits = new Dictionary<uint, string>()
+    {
+	    { 0x5DD4E45B, "Afilaor room" },
+        //{ 0x00, "Crimson Rains" },
+    };
+    print("Loaded " + roomSplits.Count + " rooms");
+	
+	// Add header settings
+    settings.Add("bosses", true, "Bosses");
+    settings.Add("rooms", true, "Rooms");
+    
+    // Add boss settings
+    settings.CurrentDefaultParent = "bosses";
+    foreach (var boss in bossSplits)
+    {
+        settings.Add("B_" + boss.Key, false, boss.Value);
+    }
+    
+    // Add room settings
+    settings.CurrentDefaultParent = "rooms";
+    foreach (var room in roomSplits)
+    {
+        settings.Add("R_" + room.Key, false, room.Value);
+    }
 
     // Change timing method to game time (Not my own, taken from another autosplitter)
     if (timer.CurrentTimingMethod == TimingMethod.GameTime)
