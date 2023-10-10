@@ -1,32 +1,39 @@
 
 state("Blasphemous 2", "Unknown")
 {
-    bool   isPlaying : 0;
-    uint   earlyRoom : 0;
-    uint    mainRoom : 0;
-    uint    lateRoom : 0;
-    int   enemyCount : 0;
+    bool     isPlaying : 0;
+    uint     earlyRoom : 0;
+    uint      mainRoom : 0;
+    uint      lateRoom : 0;
+    int     enemyCount : 0;
+    int     bossHealth : 0;
+    int   lesmesHealth : 0;
+    int  infantaHealth : 0;
+
 }
 
 state("Blasphemous 2", "1.0.5")
 {
-    bool   isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0,  0x30,  0x190;
-    uint   earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x270, 0x20,  0x14;
-    uint    mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28,  0x0;
-    uint    lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x150, 0x70;
-    int   enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
-    int       bossHP : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x30;
-    int     lesmesHP : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x50;
-    int    infantaHP : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x70;
+    bool     isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0,  0x30,  0x190;
+    uint     earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x270, 0x20,  0x14;
+    uint      mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28,  0x0;
+    uint      lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x150, 0x70;
+    int     enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
+    int     bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x30;
+    int   lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x50;
+    int  infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x70;
 }
 
 state("Blasphemous 2", "1.1.0")
 {
-    bool   isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0, 0x30, 0x190;
-    uint   earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20, 0x14;
-    uint    mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28, 0x0;
-    uint    lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
-    int   enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
+    bool     isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x30, 0x190;
+    uint     earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20, 0x14;
+    uint      mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28, 0x0;
+    uint      lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
+    int     enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
+    int     bossHealth : 0;
+    int   lesmesHealth : 0;
+    int  infantaHealth : 0;
 }
 
 start
@@ -43,38 +50,38 @@ split
 {
 
     if(current.mainRoom == 0x5DD4E45B && old.mainRoom != 0x5DD4E45B && settings["emery"] && !vars.roomsEntered.Contains("emery")){ vars.roomsEntered.Add("emery"); return true; }
-    bool afilaor = current.mainRoom == 0x5DD4E45B && current.earlyRoom == 0x5DD4E45B && current.bossHP == 0 && old.bossHP != 0 && settings["afilaor"];
+    bool afilaor = current.mainRoom == 0x5DD4E45B && current.earlyRoom == 0x5DD4E45B && current.bossHealth == 0 && old.bossHealth != 0 && settings["afilaor"];
 
     if (current.mainRoom == 0x4D00F491 && old.mainRoom != 0x4D00F491 && settings["faceless_entry"] && !vars.roomsEntered.Contains("faceless")) { vars.roomsEntered.Add("faceless"); return true; }
-    bool faceless = current.mainRoom == 0x4D00F491 && current.earlyRoom == 0x4D00F491 && current.bossHP == 0 && old.bossHP != 0 && settings["faceless"];
+    bool faceless = current.mainRoom == 0x4D00F491 && current.earlyRoom == 0x4D00F491 && current.bossHealth == 0 && old.bossHealth != 0 && settings["faceless"];
 
     if (current.mainRoom == 0x07B20B3D && old.mainRoom != 0x07B20B3D && settings["radames_entry"] && !vars.roomsEntered.Contains("radames")) { vars.roomsEntered.Add("radames"); return true; }
-    bool radames = current.mainRoom == 0x07B20B3D && current.earlyRoom == 0x07B20B3D && current.lateRoom == 0x07B20B3D && current.bossHP == 0 && old.bossHP != 0 && settings["radames"];
+    bool radames = current.mainRoom == 0x07B20B3D && current.earlyRoom == 0x07B20B3D && current.lateRoom == 0x07B20B3D && current.bossHealth == 0 && old.bossHealth != 0 && settings["radames"];
 
     if (current.mainRoom == 0xAA597F36 && old.mainRoom != 0xAA597F36 && settings["orospina_entry"] && !vars.roomsEntered.Contains("orospina")) { vars.roomsEntered.Add("orospina"); return true; }
-    bool orospina = current.mainRoom == 0xAA597F36 && current.earlyRoom == 0xAA597F36 && current.lateRoom == 0xAA597F36 && current.bossHP == 0 && old.bossHP != 0 && settings["orospina"];
+    bool orospina = current.mainRoom == 0xAA597F36 && current.earlyRoom == 0xAA597F36 && current.lateRoom == 0xAA597F36 && current.bossHealth == 0 && old.bossHealth != 0 && settings["orospina"];
 
     if (current.mainRoom == 0x07B20A5A && old.mainRoom != 0x07B20A5A && settings["lesmes_entry"] && !vars.roomsEntered.Contains("lesmes")) { vars.roomsEntered.Add("lesmes"); return true; }
-    bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHP == 0 && current.infantaHP == 0 && (old.lesmesHP != 0 || old.infantaHP != 0) && settings["lesmes"];
+    bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && settings["lesmes"];
 
     if (current.mainRoom == 0xF8126136 && old.mainRoom != 0xF8126136 && settings["benedicta_entry"] && !vars.roomsEntered.Contains("benedicta")) { vars.roomsEntered.Add("benedicta"); return true; }
-    bool benedicta = current.mainRoom == 0xF8126136 && current.earlyRoom == 0xF8126136 && current.bossHP == 0 && old.bossHP != 0 && settings["benedicta"];
+    bool benedicta = current.mainRoom == 0xF8126136 && current.earlyRoom == 0xF8126136 && current.bossHealth == 0 && old.bossHealth != 0 && settings["benedicta"];
 
     if (current.mainRoom == 0xF8126154 && old.mainRoom != 0xF8126154 && settings["odon_entry"] && !vars.roomsEntered.Contains("odon")) { vars.roomsEntered.Add("odon"); return true; }
-    bool odon = current.mainRoom == 0xF8126154 && current.earlyRoom == 0xF8126154 && current.lateRoom == 0xF8126154 && current.bossHP == 0 && old.bossHP != 0 && settings["odon"];
+    bool odon = current.mainRoom == 0xF8126154 && current.earlyRoom == 0xF8126154 && current.lateRoom == 0xF8126154 && current.bossHealth == 0 && old.bossHealth != 0 && settings["odon"];
 
     if (current.mainRoom == 0x556AEC39 && old.mainRoom != 0x556AEC39 && settings["sinodo_entry"] && !vars.roomsEntered.Contains("sinodo")) { vars.roomsEntered.Add("sinodo"); return true; }
-    bool sinodo = current.mainRoom == 0x556AEC39 && current.earlyRoom == 0x556AEC39 && current.lateRoom == 0x556AEC39 && current.bossHP == 0 && old.bossHP != 0 && settings["sinodo"];
+    bool sinodo = current.mainRoom == 0x556AEC39 && current.earlyRoom == 0x556AEC39 && current.lateRoom == 0x556AEC39 && current.bossHealth == 0 && old.bossHealth != 0 && settings["sinodo"];
 
     if (current.mainRoom == 0x556AEC59 && old.mainRoom != 0x556AEC59 && settings["susona_entry"] && !vars.roomsEntered.Contains("susona")) { vars.roomsEntered.Add("susona"); return true; }
-    bool susona = current.mainRoom == 0x556AEC59 && current.earlyRoom == 0x556AEC59 && current.lateRoom == 0x556AEC59 && current.bossHP == 0 && old.bossHP != 0 && settings["susona"];
+    bool susona = current.mainRoom == 0x556AEC59 && current.earlyRoom == 0x556AEC59 && current.lateRoom == 0x556AEC59 && current.bossHealth == 0 && old.bossHealth != 0 && settings["susona"];
 
     if (current.mainRoom == 0x9AB9D533 && old.mainRoom != 0x9AB9D533 && settings["eviterno_entry"] && !vars.roomsEntered.Contains("eviterno")) { vars.roomsEntered.Add("eviterno"); return true; }
-    if (current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHP == 0 && old.bossHP != 0 && settings["eviterno_p1"]) { vars.eviternoP1 = true; return true; }
-    bool eviterno = current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHP == 0 && old.bossHP != 0 && settings["eviterno"] && vars.eviternoP1;
+    if (current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHealth == 0 && old.bossHealth != 0 && settings["eviterno_p1"]) { vars.eviternoP1 = true; return true; }
+    bool eviterno = current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHealth == 0 && old.bossHealth != 0 && settings["eviterno"] && vars.eviternoP1;
 
     if (current.mainRoom == 0x9AB9D532 && old.mainRoom != 0x9AB9D532 && settings["devotion_entry"] && !vars.roomsEntered.Contains("devotion")) { vars.roomsEntered.Add("devotion"); return true; }
-    bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D532 && current.bossHP == 0 && old.bossHP != 0 && settings["devotion"];
+    bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D532 && current.bossHealth == 0 && old.bossHealth != 0 && settings["devotion"];
 
     return afilaor || faceless || radames || orospina || lesmes || benedicta || odon || sinodo || susona || eviterno || devotion;
 }
@@ -86,7 +93,6 @@ isLoading
 
 startup
 {
-
     settings.Add("bosses", true, "Boss Splits");
     settings.Add("faceless_entry", false, "Reach The Faceless One", "bosses");
     settings.Add("faceless", false, "Defeat The Faceless One", "bosses");
@@ -118,7 +124,7 @@ startup
     
 
     vars.roomsEntered = new List<string>();
-    vars.eviternoP1 = new bool();
+    vars.eviternoP1 = false;
 
     // Change timing method to game time (Not my own, taken from another autosplitter)
     if (timer.CurrentTimingMethod == TimingMethod.GameTime)
@@ -132,7 +138,6 @@ startup
     );
     if (timingMessage == DialogResult.Yes)
         timer.CurrentTimingMethod = TimingMethod.GameTime;
-
 }
 
 init
