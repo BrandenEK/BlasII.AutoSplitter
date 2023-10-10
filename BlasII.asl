@@ -9,7 +9,6 @@ state("Blasphemous 2", "Unknown")
     int     bossHealth : 0;
     int   lesmesHealth : 0;
     int  infantaHealth : 0;
-
 }
 
 state("Blasphemous 2", "1.0.5")
@@ -53,33 +52,18 @@ split
         var.roomsEntered.Add(current.mainRoom);
         return true;
     }
+    
+    if (current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && settings["B_" + current.mainRoom] && !vars.killedBosses.Contains(current.mainRoom))
+    {
+        vars.bossesKilled.Add(current.mainRoom);
+        return true;
+    }
 
-    if (current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHealth == 0 && old.bossHealth != 0 && settings["eviterno_p1"]) { vars.eviternoP1 = true; return true; }
-
-
-    bool afilaor = current.mainRoom == 0x5DD4E45B && current.earlyRoom == 0x5DD4E45B && current.bossHealth == 0 && old.bossHealth != 0 && settings["afilaor"];
-
-    bool faceless = current.mainRoom == 0x4D00F491 && current.earlyRoom == 0x4D00F491 && current.bossHealth == 0 && old.bossHealth != 0 && settings["faceless"];
-
-    bool radames = current.mainRoom == 0x07B20B3D && current.earlyRoom == 0x07B20B3D && current.lateRoom == 0x07B20B3D && current.bossHealth == 0 && old.bossHealth != 0 && settings["radames"];
-
-    bool orospina = current.mainRoom == 0xAA597F36 && current.earlyRoom == 0xAA597F36 && current.lateRoom == 0xAA597F36 && current.bossHealth == 0 && old.bossHealth != 0 && settings["orospina"];
-
+    // Special cases
     bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && settings["lesmes"];
-
-    bool benedicta = current.mainRoom == 0xF8126136 && current.earlyRoom == 0xF8126136 && current.bossHealth == 0 && old.bossHealth != 0 && settings["benedicta"];
-
-    bool odon = current.mainRoom == 0xF8126154 && current.earlyRoom == 0xF8126154 && current.lateRoom == 0xF8126154 && current.bossHealth == 0 && old.bossHealth != 0 && settings["odon"];
-
-    bool sinodo = current.mainRoom == 0x556AEC39 && current.earlyRoom == 0x556AEC39 && current.lateRoom == 0x556AEC39 && current.bossHealth == 0 && old.bossHealth != 0 && settings["sinodo"];
-
-    bool susona = current.mainRoom == 0x556AEC59 && current.earlyRoom == 0x556AEC59 && current.lateRoom == 0x556AEC59 && current.bossHealth == 0 && old.bossHealth != 0 && settings["susona"];
-
-    bool eviterno = current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHealth == 0 && old.bossHealth != 0 && settings["eviterno"] && vars.eviternoP1;
-
     bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D532 && current.bossHealth == 0 && old.bossHealth != 0 && settings["devotion"];
-
-    return afilaor || faceless || radames || orospina || lesmes || benedicta || odon || sinodo || susona || eviterno || devotion;
+    
+    return false;
 }
 
 isLoading
