@@ -40,47 +40,43 @@ start
 {
     if (old.mainRoom == 0 && current.mainRoom != 0)
     {
+        vars.killedBosses.Clear();
         vars.roomsEntered.Clear(); 
-        vars.eviternoP1 = false;
         return true;
     }
 }
 
 split
 {
+    if (current.mainRoom != old.mainRoom && settings["R_" + current.mainRoom] && !var.roomsEntered.Contains(current.mainRoom))
+    {
+        var.roomsEntered.Add(current.mainRoom);
+        return true;
+    }
 
-    if(current.mainRoom == 0x5DD4E45B && old.mainRoom != 0x5DD4E45B && settings["emery"] && !vars.roomsEntered.Contains("emery")){ vars.roomsEntered.Add("emery"); return true; }
+    if (current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHealth == 0 && old.bossHealth != 0 && settings["eviterno_p1"]) { vars.eviternoP1 = true; return true; }
+
+
     bool afilaor = current.mainRoom == 0x5DD4E45B && current.earlyRoom == 0x5DD4E45B && current.bossHealth == 0 && old.bossHealth != 0 && settings["afilaor"];
 
-    if (current.mainRoom == 0x4D00F491 && old.mainRoom != 0x4D00F491 && settings["faceless_entry"] && !vars.roomsEntered.Contains("faceless")) { vars.roomsEntered.Add("faceless"); return true; }
     bool faceless = current.mainRoom == 0x4D00F491 && current.earlyRoom == 0x4D00F491 && current.bossHealth == 0 && old.bossHealth != 0 && settings["faceless"];
 
-    if (current.mainRoom == 0x07B20B3D && old.mainRoom != 0x07B20B3D && settings["radames_entry"] && !vars.roomsEntered.Contains("radames")) { vars.roomsEntered.Add("radames"); return true; }
     bool radames = current.mainRoom == 0x07B20B3D && current.earlyRoom == 0x07B20B3D && current.lateRoom == 0x07B20B3D && current.bossHealth == 0 && old.bossHealth != 0 && settings["radames"];
 
-    if (current.mainRoom == 0xAA597F36 && old.mainRoom != 0xAA597F36 && settings["orospina_entry"] && !vars.roomsEntered.Contains("orospina")) { vars.roomsEntered.Add("orospina"); return true; }
     bool orospina = current.mainRoom == 0xAA597F36 && current.earlyRoom == 0xAA597F36 && current.lateRoom == 0xAA597F36 && current.bossHealth == 0 && old.bossHealth != 0 && settings["orospina"];
 
-    if (current.mainRoom == 0x07B20A5A && old.mainRoom != 0x07B20A5A && settings["lesmes_entry"] && !vars.roomsEntered.Contains("lesmes")) { vars.roomsEntered.Add("lesmes"); return true; }
     bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && settings["lesmes"];
 
-    if (current.mainRoom == 0xF8126136 && old.mainRoom != 0xF8126136 && settings["benedicta_entry"] && !vars.roomsEntered.Contains("benedicta")) { vars.roomsEntered.Add("benedicta"); return true; }
     bool benedicta = current.mainRoom == 0xF8126136 && current.earlyRoom == 0xF8126136 && current.bossHealth == 0 && old.bossHealth != 0 && settings["benedicta"];
 
-    if (current.mainRoom == 0xF8126154 && old.mainRoom != 0xF8126154 && settings["odon_entry"] && !vars.roomsEntered.Contains("odon")) { vars.roomsEntered.Add("odon"); return true; }
     bool odon = current.mainRoom == 0xF8126154 && current.earlyRoom == 0xF8126154 && current.lateRoom == 0xF8126154 && current.bossHealth == 0 && old.bossHealth != 0 && settings["odon"];
 
-    if (current.mainRoom == 0x556AEC39 && old.mainRoom != 0x556AEC39 && settings["sinodo_entry"] && !vars.roomsEntered.Contains("sinodo")) { vars.roomsEntered.Add("sinodo"); return true; }
     bool sinodo = current.mainRoom == 0x556AEC39 && current.earlyRoom == 0x556AEC39 && current.lateRoom == 0x556AEC39 && current.bossHealth == 0 && old.bossHealth != 0 && settings["sinodo"];
 
-    if (current.mainRoom == 0x556AEC59 && old.mainRoom != 0x556AEC59 && settings["susona_entry"] && !vars.roomsEntered.Contains("susona")) { vars.roomsEntered.Add("susona"); return true; }
     bool susona = current.mainRoom == 0x556AEC59 && current.earlyRoom == 0x556AEC59 && current.lateRoom == 0x556AEC59 && current.bossHealth == 0 && old.bossHealth != 0 && settings["susona"];
 
-    if (current.mainRoom == 0x9AB9D533 && old.mainRoom != 0x9AB9D533 && settings["eviterno_entry"] && !vars.roomsEntered.Contains("eviterno")) { vars.roomsEntered.Add("eviterno"); return true; }
-    if (current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHealth == 0 && old.bossHealth != 0 && settings["eviterno_p1"]) { vars.eviternoP1 = true; return true; }
     bool eviterno = current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D533 && current.bossHealth == 0 && old.bossHealth != 0 && settings["eviterno"] && vars.eviternoP1;
 
-    if (current.mainRoom == 0x9AB9D532 && old.mainRoom != 0x9AB9D532 && settings["devotion_entry"] && !vars.roomsEntered.Contains("devotion")) { vars.roomsEntered.Add("devotion"); return true; }
     bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D532 && current.bossHealth == 0 && old.bossHealth != 0 && settings["devotion"];
 
     return afilaor || faceless || radames || orospina || lesmes || benedicta || odon || sinodo || susona || eviterno || devotion;
@@ -93,7 +89,7 @@ isLoading
 
 startup
 {
-	print("BlasII initialization");
+    print("BlasII initialization");
     
     vars.killedBosses = new List<uint>();
     vars.roomsEntered = new List<uint>();
@@ -110,19 +106,29 @@ startup
         { 0x556AEC39, "Sinodo" },
         { 0x556AEC59, "Svsona" },
         { 0x9AB9D533, "Eviterno phase 1" },
-        { 0x00000000, "Eviterno phase 2" },
+        { 0x00000005, "Eviterno phase 2" },
         { 0x9AB9D532, "Devotion Incarnate" },
     };
     print("Loaded " + bossSplits.Count + " bosses");
-	
-	var roomSplits = new Dictionary<uint, string>()
+    
+    var roomSplits = new Dictionary<uint, string>()
     {
-	    { 0x5DD4E45B, "Afilaor room" },
+        { 0x4D00F491, "Faceless One room" },
+        { 0x07B20B3D, "Radames room" },
+        { 0xAA597F36, "Orospina room" },
+        { 0x07B20A5A, "Lesmes room" },
+        { 0x5DD4E45B, "Afilaor room" },
+        { 0xF8126136, "Benedicta room" },
+        { 0xF8126154, "Odon room" },
+        { 0x556AEC39, "Sinodo room" },
+        { 0x556AEC59, "Svsona room" },
+        { 0x9AB9D533, "Eviterno room" },
+        { 0x9AB9D532, "Devotion Incarnate room" },
         //{ 0x00, "Crimson Rains" },
     };
     print("Loaded " + roomSplits.Count + " rooms");
-	
-	// Add header settings
+    
+    // Add header settings
     settings.Add("bosses", true, "Bosses");
     settings.Add("rooms", true, "Rooms");
     
