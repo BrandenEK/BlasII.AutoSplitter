@@ -39,7 +39,7 @@ start
 {
     if (old.mainRoom == 0 && current.mainRoom != 0)
     {
-        vars.killedBosses.Clear();
+        vars.bossesKilled.Clear();
         vars.roomsEntered.Clear(); 
         return true;
     }
@@ -47,18 +47,18 @@ start
 
 split
 {
-    if (current.mainRoom != old.mainRoom && settings["R_" + current.mainRoom] && !var.roomsEntered.Contains(current.mainRoom))
-    {
-        var.roomsEntered.Add(current.mainRoom);
-        return true;
-    }
-    
-    if (current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && settings["B_" + current.mainRoom] && !vars.killedBosses.Contains(current.mainRoom))
+    if (current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
         vars.bossesKilled.Add(current.mainRoom);
         return true;
     }
 
+    if (current.mainRoom != old.mainRoom && settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+    {
+        vars.roomsEntered.Add(current.mainRoom);
+        return true;
+    }
+    
     // Need to use custom health instead of boss health
     // bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && settings["lesmes"];
     // Need to use different early room instead of main room
@@ -76,7 +76,7 @@ startup
 {
     print("BlasII initialization");
     
-    vars.killedBosses = new List<uint>();
+    vars.bossesKilled = new List<uint>();
     vars.roomsEntered = new List<uint>();
     
     var bossSplits = new Dictionary<uint, string>()
