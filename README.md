@@ -20,3 +20,13 @@ First find the main room hash.  There should be five consistent addresses, this 
 
 ### enemyCount
 Start in Profundo Lamento to narrow it down to about fifteen enemy counts.  Then enter the Chiseled One boss fight.  It should be 0 at first, and should only change to 1 once his wheel hits the ground.  There will be two addresses, use the second one.
+
+### bossHP
+Go to The Faceless One (tutorial boss), value should be 500 and decreasing with each hit.
+Pointers are quite long, find 6-7 offsets long pointers with the right base adress then search for longer pointers by fixing the last 4/5 offests so it's fast enough.
+
+### infantaHP
+Add Ox20 to the last offset of bossHP
+
+### lesmesHP
+Add Ox40 to the last offset of bossHP
