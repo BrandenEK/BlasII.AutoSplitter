@@ -49,38 +49,35 @@ split
 {
     // Special single check for lesmes & infanta health
 
-    // Check if standard boss was just killed
     if (current.bossHealth == 0 && old.bossHealth != 0)
     {
-        // Special conditions for devotion
-
         // If in eviterno room, set phase variable if not set, or split if so
 
-        // Check if dead boss should be split
-        if (current.mainRoom == current.earlyRoom && settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
-        {
-            vars.bossesKilled.Add(current.mainRoom);
-            return true;
-        }
+        // Ensure that it was a valid boss that was just killed
+        bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533;
+        bool standard = current.mainRoom == current.earlyRoom;
+
+        if (!standard || !devotion || !settings["B_" + current.mainRoom] || vars.bossesKilled.Contains(current.mainRoom))
+            return false;
+
+        vars.bossesKilled.Add(current.mainRoom);
+        return true;
     }
 
-    // Check if current room is different
     if (current.mainRoom != old.mainRoom)
     {
         // If leaving eviterno room, reset his phase variable
 
-        // Check if new room should be split
-        if (settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
-        {
-            vars.roomsEntered.Add(current.mainRoom);
-            return true;
-        }
+        // Ensure that it was a valid room that was entered
+        if (!settings["R_" + current.mainRoom] || vars.roomsEntered.Contains(current.mainRoom))
+            return false;
+
+        vars.roomsEntered.Add(current.mainRoom);
+        return true;
     }
     
     // Need to use custom health instead of boss health
     // bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && settings["lesmes"];
-    // Need to use different early room instead of main room
-    // bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D532 && current.bossHealth == 0 && old.bossHealth != 0 && settings["devotion"];
     
     return false;
 }
