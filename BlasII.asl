@@ -25,14 +25,14 @@ state("Blasphemous 2", "1.0.5")
 
 state("Blasphemous 2", "1.1.0")
 {
-    bool     isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x30, 0x190;
-    uint     earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20, 0x14;
-    uint      mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28, 0x0;
+    bool     isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x30,  0x190;
+    uint     earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20,  0x14;
+    uint      mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28,  0x0;
     uint      lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
     int     enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
-    int     bossHealth : 0;
-    int   lesmesHealth : 0;
-    int  infantaHealth : 0;
+    int     bossHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x30;
+    int   lesmesHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x50;
+    int  infantaHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x70;
 }
 
 start
@@ -99,17 +99,20 @@ startup
     var roomSplits = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Faceless One room" },
+        { 0x4D00F471, "Sacred Entombments Teleporter" },
         { 0x07B20B3D, "Radames room" },
         { 0xAA597F36, "Orospina room" },
+        { 0xAA597EF5, "Crown of Towers teleporter" },
         { 0x07B20A5A, "Lesmes room" },
         { 0x5DD4E45B, "Afilaor room" },
+        { 0x9AB9D54C, "Dove room"},
         { 0xF8126136, "Benedicta room" },
         { 0xF8126154, "Odon room" },
         { 0x556AEC39, "Sinodo room" },
         { 0x556AEC59, "Svsona room" },
+        { 0xF8126090, "Crimson Rains" },
         { 0x9AB9D533, "Eviterno room" },
         { 0x9AB9D532, "Devotion Incarnate room" },
-        //{ 0x00, "Crimson Rains" },
     };
     print("Loaded " + roomSplits.Count + " rooms");
     
