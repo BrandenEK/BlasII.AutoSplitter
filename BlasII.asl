@@ -47,16 +47,34 @@ start
 
 split
 {
-    if (current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
+    // Special single check for lesmes & infanta health
+
+    // Check if standard boss was just killed
+    if (current.bossHealth == 0 && old.bossHealth != 0)
     {
-        vars.bossesKilled.Add(current.mainRoom);
-        return true;
+        // Special conditions for devotion
+
+        // If in eviterno room, set phase variable if not set, or split if so
+
+        // Check if dead boss should be split
+        if (current.mainRoom == current.earlyRoom && settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
+        {
+            vars.bossesKilled.Add(current.mainRoom);
+            return true;
+        }
     }
 
-    if (current.mainRoom != old.mainRoom && settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+    // Check if current room is different
+    if (current.mainRoom != old.mainRoom)
     {
-        vars.roomsEntered.Add(current.mainRoom);
-        return true;
+        // If leaving eviterno room, reset his phase variable
+
+        // Check if new room should be split
+        if (settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+        {
+            vars.roomsEntered.Add(current.mainRoom);
+            return true;
+        }
     }
     
     // Need to use custom health instead of boss health
