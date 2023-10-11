@@ -40,7 +40,8 @@ start
     if (old.mainRoom == 0 && current.mainRoom != 0)
     {
         vars.bossesKilled.Clear();
-        vars.roomsEntered.Clear(); 
+        vars.roomsEntered.Clear();
+        vars.eviternoPhaseTwo = false;
         return true;
     }
 }
@@ -49,17 +50,24 @@ split
 {
     bool standardKilled = current.bossHealth == 0 && old.bossHealth != 0;
     bool lesmesKilled = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0);
+    bool eviternoKilled = false;
     bool devotionKilled = false;
 
     if (standardKilled || lesmesKilled)
     {
-        // If in eviterno room, set phase variable if not set, or split if so
-
         // Ensure that it was a valid boss that was just killed
-        devotionKilled = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533;
         standardKilled = current.mainRoom == current.earlyRoom;
+        eviternoKilled = current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533;
+        devotionKilled = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533;
 
-        if (!standardKilled || !devotionKilled || !settings["B_" + current.mainRoom] || vars.bossesKilled.Contains(current.mainRoom))
+        // If eviterno was killed but it was in phase one
+        if (eviternoKilled && !vars.eviternoPhaseTwo)
+        {
+            vars.eviternoPhaseTwo = true;
+            return false;
+        }
+
+        if (!(standardKilled || devotionKilled) || !settings["B_" + current.mainRoom] || vars.bossesKilled.Contains(current.mainRoom))
             return false;
 
         vars.bossesKilled.Add(current.mainRoom);
@@ -68,7 +76,7 @@ split
 
     if (current.mainRoom != old.mainRoom)
     {
-        // If leaving eviterno room, reset his phase variable
+        vars.eviternoPhaseTwo = false;
 
         // Ensure that it was a valid room that was entered
         if (!settings["R_" + current.mainRoom] || vars.roomsEntered.Contains(current.mainRoom))
@@ -92,6 +100,7 @@ startup
     
     vars.bossesKilled = new List<uint>();
     vars.roomsEntered = new List<uint>();
+    vars.eviternoPhaseTwo = false;
     
     var bossSplits = new Dictionary<uint, string>()
     {
@@ -104,8 +113,7 @@ startup
         { 0xF8126154, "Odon" },
         { 0x556AEC39, "Sinodo" },
         { 0x556AEC59, "Svsona" },
-        { 0x9AB9D533, "Eviterno phase 1" },
-        { 0x00000005, "Eviterno phase 2" },
+        { 0x9AB9D533, "Eviterno" },
         { 0x9AB9D532, "Devotion Incarnate" },
     };
     print("Loaded " + bossSplits.Count + " bosses");
