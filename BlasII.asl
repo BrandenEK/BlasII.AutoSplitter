@@ -99,17 +99,20 @@ startup
     var roomSplits = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Faceless One room" },
+        { 0x4D00F471, "Sacred Entombments Teleporter" },
         { 0x07B20B3D, "Radames room" },
         { 0xAA597F36, "Orospina room" },
+        { 0xAA597EF5, "Crown of Towers teleporter" },
         { 0x07B20A5A, "Lesmes room" },
         { 0x5DD4E45B, "Afilaor room" },
+        { 0x9AB9D54C, "Dove room"},
         { 0xF8126136, "Benedicta room" },
         { 0xF8126154, "Odon room" },
         { 0x556AEC39, "Sinodo room" },
         { 0x556AEC59, "Svsona room" },
+        { 0xF8126090, "Crimson Rains" },
         { 0x9AB9D533, "Eviterno room" },
         { 0x9AB9D532, "Devotion Incarnate room" },
-        //{ 0x00, "Crimson Rains" },
     };
     print("Loaded " + roomSplits.Count + " rooms");
     
