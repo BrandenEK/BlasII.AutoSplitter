@@ -41,49 +41,47 @@ start
     {
         vars.bossesKilled.Clear();
         vars.roomsEntered.Clear();
-        vars.eviternoPhaseTwo = false;
+        vars.isPhaseTwo = false;
         return true;
     }
 }
 
 split
 {
-    bool standardKilled = current.bossHealth == 0 && old.bossHealth != 0;
-    bool lesmesKilled = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0);
-    bool eviternoKilled = false;
-    bool devotionKilled = false;
-
-    if (standardKilled || lesmesKilled)
+    if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
-        // Ensure that it was a valid boss that was just killed
-        standardKilled = current.mainRoom == current.earlyRoom;
-        eviternoKilled = current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533;
-        devotionKilled = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533;
+        // Check if any bosses were just killed
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533;
+        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom;
 
-        // If eviterno was killed but it was in phase one
-        if (eviternoKilled && !vars.eviternoPhaseTwo)
+        // If it was eviterno phase 1, change the flag but dont split
+        if (eviterno && !vars.isPhaseTwo)
         {
-            vars.eviternoPhaseTwo = true;
+            vars.isPhaseTwo = true;
             return false;
         }
 
-        if (!(standardKilled || devotionKilled) || !settings["B_" + current.mainRoom] || vars.bossesKilled.Contains(current.mainRoom))
-            return false;
-
-        vars.bossesKilled.Add(current.mainRoom);
-        return true;
+        // If it was a real boss, split
+        if (standard || eviterno && vars.isPhaseTwo || devotion || lesmes)
+        {
+            vars.bossesKilled.Add(current.mainRoom);
+            return true;
+        }
     }
 
     if (current.mainRoom != old.mainRoom)
     {
-        vars.eviternoPhaseTwo = false;
+        // Whenever changing rooms, reset the phase flag
+        vars.isPhaseTwo = false;
 
         // Ensure that it was a valid room that was entered
-        if (!settings["R_" + current.mainRoom] || vars.roomsEntered.Contains(current.mainRoom))
-            return false;
-
-        vars.roomsEntered.Add(current.mainRoom);
-        return true;
+        if (settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+        {
+            vars.roomsEntered.Add(current.mainRoom);
+            return true;
+        }
     }
 
     return false;
@@ -100,7 +98,7 @@ startup
     
     vars.bossesKilled = new List<uint>();
     vars.roomsEntered = new List<uint>();
-    vars.eviternoPhaseTwo = false;
+    vars.isPhaseTwo = false;
     
     var bossSplits = new Dictionary<uint, string>()
     {
