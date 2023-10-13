@@ -17,10 +17,11 @@ state("Blasphemous 2", "1.0.5")
     uint     earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x270, 0x20,  0x14;
     uint      mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28,  0x0;
     uint      lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x150, 0x70;
-    int     enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
+    //int     enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
     int     bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x30;
     int   lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x50;
     int  infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x70;
+    int characterHealth : 0;
 }
 
 state("Blasphemous 2", "1.1.0")
@@ -29,10 +30,11 @@ state("Blasphemous 2", "1.1.0")
     uint     earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20,  0x14;
     uint      mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28,  0x0;
     uint      lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
-    int     enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
+    //int     enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
     int     bossHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x30;
     int   lesmesHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x50;
     int  infantaHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x70;
+    int characterHealth : 0;
 }
 
 start
@@ -51,10 +53,10 @@ split
     if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
         // Check if any bosses were just killed
-        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && current.mainRoom != 0x07B20A5A;
-        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533;
-        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533;
-        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom;
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && current.mainRoom != 0x07B20A5A && characterHealth != 0;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && characterHealth != 0;
+        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && characterHealth != 0;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && characterHealth != 0;
 
         // If it was eviterno phase 1, change the flag but dont split
         if (eviterno && !vars.isPhaseTwo)
