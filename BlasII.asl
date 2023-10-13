@@ -44,23 +44,48 @@ start
     if (old.mainRoom == 0 && current.mainRoom != 0)
     {
         vars.bossesKilled.Clear();
-        vars.roomsEntered.Clear(); 
+        vars.roomsEntered.Clear();
+        vars.isPhaseTwo = false;
         return true;
     }
 }
 
 split
 {
-    if (current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
+    if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
-        vars.bossesKilled.Add(current.mainRoom);
-        return true;
+        // Check if any bosses were just killed
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && current.mainRoom != 0x07B20A5A;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533;
+        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom;
+
+        // If it was eviterno phase 1, change the flag but dont split
+        if (eviterno && !vars.isPhaseTwo)
+        {
+            vars.isPhaseTwo = true;
+            return false;
+        }
+
+        // If it was a real boss, split
+        if (standard || eviterno && vars.isPhaseTwo || devotion || lesmes)
+        {
+            vars.bossesKilled.Add(current.mainRoom);
+            return true;
+        }
     }
 
-    if (current.mainRoom != old.mainRoom && settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+    if (current.mainRoom != old.mainRoom)
     {
-        vars.roomsEntered.Add(current.mainRoom);
-        return true;
+        // Whenever changing rooms, reset the phase flag
+        vars.isPhaseTwo = false;
+
+        // Ensure that it was a valid room that was entered
+        if (settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+        {
+            vars.roomsEntered.Add(current.mainRoom);
+            return true;
+        }
     }
 
     if (current.mainRoom == old.mainRoom && isInputLocked && settings["I_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
@@ -68,12 +93,6 @@ split
         vars.itemAcquired.Add(current.mainRoom);
         return true;
     }
-    
-    // Need to use custom health instead of boss health
-    // bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && settings["lesmes"];
-    // Need to use different early room instead of main room
-    // bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D532 && current.bossHealth == 0 && old.bossHealth != 0 && settings["devotion"];
-    
     return false;
 }
 
@@ -89,6 +108,7 @@ startup
     vars.bossesKilled = new List<uint>();
     vars.roomsEntered = new List<uint>();
     vars.itemAcquired = new List<uint>();
+    vars.isPhaseTwo = false;
     
     var bossSplits = new Dictionary<uint, string>()
     {
@@ -101,8 +121,7 @@ startup
         { 0xF8126154, "Odon" },
         { 0x556AEC39, "Sinodo" },
         { 0x556AEC59, "Svsona" },
-        { 0x9AB9D533, "Eviterno phase 1" },
-        { 0x00000005, "Eviterno phase 2" },
+        { 0x9AB9D533, "Eviterno" },
         { 0x9AB9D532, "Devotion Incarnate" },
     };
     print("Loaded " + bossSplits.Count + " bosses");
