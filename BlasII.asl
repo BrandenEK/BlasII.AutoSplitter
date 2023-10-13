@@ -21,6 +21,10 @@ state("Blasphemous 2", "1.0.5")
     int     bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x30;
     int   lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x50;
     int  infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x70;
+    bool isInputLocked : 0;
+    //float characterPositionX: 0; //not implemented
+    //float characterPositionY: 0;
+
 }
 
 state("Blasphemous 2", "1.1.0")
@@ -58,6 +62,12 @@ split
         vars.roomsEntered.Add(current.mainRoom);
         return true;
     }
+
+    if (current.mainRoom == old.mainRoom && isInputLocked && settings["I_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+    {
+        vars.itemAcquired.Add(current.mainRoom);
+        return true;
+    }
     
     // Need to use custom health instead of boss health
     // bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && settings["lesmes"];
@@ -78,6 +88,7 @@ startup
     
     vars.bossesKilled = new List<uint>();
     vars.roomsEntered = new List<uint>();
+    vars.itemAcquired = new List<uint>();
     
     var bossSplits = new Dictionary<uint, string>()
     {
@@ -115,11 +126,18 @@ startup
         { 0x9AB9D532, "Devotion Incarnate room" },
     };
     print("Loaded " + roomSplits.Count + " rooms");
+
+    var itemSplits = new Dictionary<list<int>, string>()
+    {
+        { 0x00000000, "item"}
+    }
+    print("Loaded " + itemSplits.Count + " items");
     
     // Add header settings
     settings.Add("bosses", true, "Bosses");
     settings.Add("rooms", true, "Rooms");
-    
+    settings.Add("items", true, "Items/Abilities")
+
     // Add boss settings
     settings.CurrentDefaultParent = "bosses";
     foreach (var boss in bossSplits)
@@ -132,6 +150,13 @@ startup
     foreach (var room in roomSplits)
     {
         settings.Add("R_" + room.Key, false, room.Value);
+    }
+
+    //add items settings
+    settings.CurrentDefaultParent = "items";
+    foreach (var item in itemSplits)
+    {
+        settings.Add("I_" + room.Key, false, room.Value);
     }
 
     // Change timing method to game time (Not my own, taken from another autosplitter)
