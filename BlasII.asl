@@ -94,13 +94,13 @@ split
         }
     }
 
-    if (current.mainRoom == current.lateRoom && isItemPickUp && settings["I_" + current.mainRoom] && !vars.itemAcquired.Contains(current.mainRoom))
+    if (current.mainRoom == current.lateRoom && current.isItemPickUp && settings["I_" + current.mainRoom] && !vars.itemAcquired.Contains(current.mainRoom))
     {
         vars.itemsAcquired.Add(current.mainRoom);
         return true;
     }
 
-    if (current.mainRoom == current.lateRoom && isInputLocked && settings["A_" + current.mainRoom] && !vars.abilitiesAcquired.Contains(current.mainRoom))
+    if (current.earlyRoom == current.lateRoom && current.isInputLocked && settings["A_" + current.mainRoom] && !vars.abilitiesAcquired.Contains(current.mainRoom))
     {
         vars.abilitiesAcquired.Add(current.mainRoom);
         return true;
@@ -136,7 +136,7 @@ startup
         { 0x556AEC39, "Sinodo" },
         { 0x556AEC59, "Svsona" },
         { 0x9AB9D533, "Eviterno" },
-        { 0x9AB9D532, "Devotion Incarnate" },
+        { 0x9AB9D532, "Devotion Incarnate" }
     };
     print("Loaded " + bossSplits.Count + " bosses");
     
@@ -156,17 +156,22 @@ startup
         { 0x556AEC59, "Svsona room" },
         { 0xF8126090, "Crimson Rains" },
         { 0x9AB9D533, "Eviterno room" },
-        { 0x9AB9D532, "Devotion Incarnate room" },
+        { 0x9AB9D532, "Devotion Incarnate room" }
     };
     print("Loaded " + roomSplits.Count + " rooms");
 
-    var itemSplits = new Dictionary<list<int>, string>()
+    var itemSplits = new Dictionary<uint, string>()
     {
-        { 0x00000000, "item"}
-    }
+        { 0xF812602A, "Mirabas"},
+        { 0xEFA86829, "The Punished One"},
+        { 0x5DD4E501, "Sea of Ink Forgotten Tribute"},
+        { 0xEFA868CC, "Embossed Rat Skull"},
+        { 0x5DD4E47C, "Gregal"},
+        { 0xEFA86827, "The Guide"},
+    };
     print("Loaded " + itemSplits.Count + " items");
 
-    var abilitiesSplits = new Dictionary<list<int>, string>()
+    var abilitySplits = new Dictionary<uint, string>()
     {
         { 0xF8126038, "Ivy of ascension (Wall jump)"},
         { 0x5DD4E457, "Passage of ash (Double jump)"},
@@ -177,11 +182,11 @@ startup
         { 0xF8126191, "Veredicto Elevated Temples upgrade"},
         { 0xEFA86829, "Ruego"},
         { 0x007C58FA, "Ruego Mother of Mothers upgrade"},
-        { 0x07B20A62, "Ruego Crown of Towers upgrade"},
+        { 0x07B20A62, "Ruego Crown of Towers upgrade"}, // can get wrong split because of statue in the room, might need special case.
         { 0x4D00F3CA, "Sarmiento & Cantella"},
         { 0xE008BF66, "S&C Elevated Temples upgrade"},
-        { 0xEFA8688A, "S&C Choir of Thorns upgrade"},
-    }
+        { 0xEFA8688A, "S&C Choir of Thorns upgrade"}
+    };
     print("Loaded " + abilitySplits.Count + " abilities");
     
     // Add header settings
