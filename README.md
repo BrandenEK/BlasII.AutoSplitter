@@ -34,3 +34,14 @@ Add Ox40 to the last offset of bossHealth.
 
 ### characterHealth
 Check TPO's Health on the pause menu and search for this value.
+
+### isInputLocked
+Bind cheat engine pause process shortcut.
+The value is 0 while the game is in focus and TPO can move normally, pause the game before launching scan, unpause click off blasphemous 2 and the value should be 1.
+
+### isItemPickUp
+Value is 1 while chest animation is playing, 0 is not picking up an item or ability.
+
+### characterPositionX
+Make sure to search for float.
+City Prie Dieu coordinate is -130, going to the right increases it

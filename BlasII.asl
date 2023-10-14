@@ -113,7 +113,7 @@ split
     {
         bool standard = current.earlyRoom == old.lateRoom && current.lateRoom != 0x556AEBD6;
         bool patio = current.mainRoom == 0x5DD4E43B && (int) current.characterPositionX < 32;
-        return standard; || patio;
+        return standard || patio;
     }
 
     return false;
