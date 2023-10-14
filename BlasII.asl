@@ -53,10 +53,10 @@ split
     if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
         // Check if any bosses were just killed
-        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && current.mainRoom != 0x07B20A5A && characterHealth != 0;
-        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && characterHealth != 0;
-        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && characterHealth != 0;
-        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && characterHealth != 0;
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && current.mainRoom != 0x07B20A5A && current.characterHealth != 0;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.characterHealth != 0;
+        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.characterHealth != 0;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && current.characterHealth != 0;
 
         // If it was eviterno phase 1, change the flag but dont split
         if (eviterno && !vars.isPhaseTwo)
