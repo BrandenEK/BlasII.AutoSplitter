@@ -22,11 +22,11 @@ state("Blasphemous 2", "1.0.5")
     int           bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x30;
     int         lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x50;
     int        infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x70;
-    int      characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x348, 0x10,  0xC0,  0x20,  0x38,  0x10,  0x50,  0x2A8;
+    int      characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x1E8, 0x18,  0x20,  0x30,  0x90,  0x18,  0x120, 0x98;
     bool       isInputLocked : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x510, 0x198, 0x78;
     bool        isItemPickUp : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x3C8, 0x38,  0xA8,  0x18,  0x258, 0x70;
-    float characterPositionX : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x38,  0x60,  0x148, 0x274;
-    //float characterPositionY: "GameAssembly.dll", 0x336A6F0, 0xB8, 0xB8,  0x10,  0x150, 0x288, 0xDC;
+    //float characterPositionY : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x38,  0x60,  0x148, 0x274;
+    float characterPositionX : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x38,  0x60,  0x48,  0xDC;
 }
 
 state("Blasphemous 2", "1.1.0")
@@ -47,26 +47,28 @@ state("Blasphemous 2", "1.1.0")
 
 start
 {
-    if (old.mainRoom == 0 && current.mainRoom != 0)
-    {
-        vars.bossesKilled.Clear();
-        vars.roomsEntered.Clear();
-        vars.itemsAcquired.Clear();
-        vars.abilitiesAcquired.Clear();
-        vars.isPhaseTwo = false;
-        return true;
-    }
+    return old.mainRoom == 0 && current.mainRoom != 0;
+}
+
+onStart
+{
+    vars.bossesKilled.Clear();
+    vars.roomsEntered.Clear();
+    vars.itemsAcquired.Clear();
+    vars.abilitiesAcquired.Clear();
+    vars.shopsUsed.Clear();
+    vars.isPhaseTwo = false;
 }
 
 split
 {
+    //print (vars.itemsAcquired[0]);
     if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
         // Check if any bosses were just killed
-        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && current.mainRoom != 0x07B20A5A && current.characterHealth != 0;
-        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.characterHealth != 0;
-        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.characterHealth != 0;
-        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && current.characterHealth != 0;
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom != 0x07B20A5A && old.characterHealth != 0;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && old.characterHealth != 0;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && old.characterHealth != 0;
 
         // If it was eviterno phase 1, change the flag but dont split
         if (eviterno && !vars.isPhaseTwo)
@@ -76,7 +78,7 @@ split
         }
 
         // If it was a real boss, split
-        if (standard || eviterno && vars.isPhaseTwo || devotion || lesmes)
+        if (standard || eviterno && vars.isPhaseTwo || lesmes)
         {
             vars.bossesKilled.Add(current.mainRoom);
             return true;
@@ -96,7 +98,7 @@ split
         }
     }
 
-    if (current.mainRoom == current.lateRoom && current.isItemPickUp && settings["I_" + current.mainRoom] && !vars.itemAcquired.Contains(current.mainRoom))
+    if (current.mainRoom == current.lateRoom && current.isItemPickUp && settings["I_" + current.mainRoom] && !vars.itemsAcquired.Contains(current.mainRoom))
     {
         vars.itemsAcquired.Add(current.mainRoom);
         return true;
@@ -109,11 +111,16 @@ split
         return true;
     }
 
-    if (current.isInputLocked && settings["S_" + current.mainRoom])
+    if (current.isInputLocked && settings["S_" + current.mainRoom] && !vars.shopsUsed.Contains(current.mainRoom))
     {
         bool standard = current.earlyRoom == old.lateRoom && current.lateRoom != 0x556AEBD6;
         bool patio = current.mainRoom == 0x5DD4E43B && (int) current.characterPositionX < 32;
-        return standard || patio;
+
+        if (standard || patio)
+        {
+            vars.shopsUsed.Add(current.mainRoom);
+            return true;
+        }
     }
 
     return false;
@@ -132,6 +139,7 @@ startup
     vars.roomsEntered = new List<uint>();
     vars.itemsAcquired = new List<uint>();
     vars.abilitiesAcquired = new List<uint>();
+    vars.shopsUsed = new List<uint>();
     vars.isPhaseTwo = false;
     
     var bossSplits = new Dictionary<uint, string>()
@@ -173,6 +181,7 @@ startup
         { 0xF812602A, "Mirabas"},
         { 0xEFA86829, "The Punished One"},
         { 0x5DD4E501, "Sea of Ink Forgotten Tribute"},
+        { 0xEFA868CF, "Bleeding Miracle"},
         { 0xEFA868CC, "Embossed Rat Skull"},
         { 0x5DD4E47C, "Gregal"},
         { 0xEFA86827, "The Guide"},
