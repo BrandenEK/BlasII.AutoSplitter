@@ -14,34 +14,35 @@ state("Blasphemous 2", "Unknown")
 
 state("Blasphemous 2", "1.0.5")
 {
-    bool      isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0,  0x30,  0x190;
-    uint      earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x270, 0x20,  0x14;
-    uint       mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28,  0x0;
-    uint       lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x150, 0x70;
-    //int      enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
-    int      bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x30;
-    int    lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x50;
-    int   infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x70;
-    int characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x348, 0x10,  0xC0,  0x20,  0x38,  0x10,  0x50,  0x2A8;
-    bool  isInputLocked : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x510, 0x198, 0x78;
-    bool   isItemPickUp : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x38,  0xA8,  0x18,  0x258, 0x70;
-    //float characterPositionX: "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0,  0x38,  0x60,  0x148, 0x274; //not implemented
+    bool           isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x30,  0x190;
+    uint           earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x270, 0x20,  0x14;
+    uint            mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x2D0, 0x28,  0x0;
+    uint            lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x3C8, 0x150, 0x70;
+    //int         enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x4E8, 0x178, 0x80;
+    int           bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x30;
+    int         lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x50;
+    int        infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x70;
+    int      characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x348, 0x10,  0xC0,  0x20,  0x38,  0x10,  0x50,  0x2A8;
+    bool       isInputLocked : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x510, 0x198, 0x78;
+    bool        isItemPickUp : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x3C8, 0x38,  0xA8,  0x18,  0x258, 0x70;
+    float characterPositionX : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x38,  0x60,  0x148, 0x274;
     //float characterPositionY: "GameAssembly.dll", 0x336A6F0, 0xB8, 0xB8,  0x10,  0x150, 0x288, 0xDC;
 }
 
 state("Blasphemous 2", "1.1.0")
 {
-    bool      isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x30,  0x190;
-    uint      earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20,  0x14;
-    uint       mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28,  0x0;
-    uint       lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
-    //int      enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
-    int      bossHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x30;
-    int    lesmesHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x50;
-    int   infantaHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x70;
-    int characterHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x38,  0x208, 0x2B8, 0x1C0, 0x148;
-    bool isInputLocked : 0;
-    bool  isItemPickUp : 0;
+    bool           isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x30,  0x190;
+    uint           earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20,  0x14;
+    uint            mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28,  0x0;
+    uint            lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
+    //int         enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
+    int           bossHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x30;
+    int         lesmesHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x50;
+    int        infantaHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x70;
+    int      characterHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x38,  0x208, 0x2B8, 0x1C0, 0x148;
+    bool       isInputLocked : 0;
+    bool        isItemPickUp : 0;
+    float characterPositionX : 0;
 }
 
 start
@@ -62,10 +63,10 @@ split
     if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
         // Check if any bosses were just killed
-        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && current.mainRoom != 0x07B20A5A && characterHealth != 0;
-        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && characterHealth != 0;
-        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && characterHealth != 0;
-        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && characterHealth != 0;
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && current.mainRoom != 0x07B20A5A && current.characterHealth != 0;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.earlyRoom == 0x9AB9D533 && current.characterHealth != 0;
+        bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.characterHealth != 0;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && current.characterHealth != 0;
 
         // If it was eviterno phase 1, change the flag but dont split
         if (eviterno && !vars.isPhaseTwo)
@@ -101,10 +102,18 @@ split
         return true;
     }
 
-    if (current.earlyRoom == current.lateRoom && current.isInputLocked && settings["A_" + current.mainRoom] && !vars.abilitiesAcquired.Contains(current.mainRoom))
+    if (current.earlyRoom == old.lateRoom && current.isInputLocked && settings["A_" + current.mainRoom] && !vars.abilitiesAcquired.Contains(current.mainRoom))
     {
+        if(current.mainRoom == 0x07B20A62 && current.characterPositionX < 805) return false;
         vars.abilitiesAcquired.Add(current.mainRoom);
         return true;
+    }
+
+    if (current.isInputLocked && settings["S_" + current.mainRoom])
+    {
+        bool standard = current.earlyRoom == old.lateRoom && current.lateRoom != 0x556AEBD6;
+        bool patio = current.mainRoom == 0x5DD4E43B && (int) current.characterPositionX < 32;
+        return standard; || patio;
     }
 
     return false;
@@ -144,10 +153,8 @@ startup
     var roomSplits = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Faceless One room" },
-        { 0x4D00F471, "Sacred Entombments teleporter" },
         { 0x07B20B3D, "Radames room" },
         { 0xAA597F36, "Orospina room" },
-        { 0xAA597EF5, "Crown of Towers teleporter" },
         { 0x07B20A5A, "Lesmes room" },
         { 0x5DD4E45B, "Afilaor room" },
         { 0x9AB9D54C, "Dove room"},
@@ -189,12 +196,24 @@ startup
         { 0xEFA8688A, "S&C Choir of Thorns upgrade"}
     };
     print("Loaded " + abilitySplits.Count + " abilities");
+
+    var shopSplits = new Dictionary<uint, string>()
+    {
+        { 0xAA597EF5, "Crown of Towers teleporter"},
+        { 0x4D00F471, "Sacred Entombments teleporter"},
+        { 0x81D8A9E6, "City shop"},
+        { 0x81D8A9E5, "The Sculptor"},
+        { 0x81D8A9E4, "The Confessor"},
+        { 0x5DD4E43B, "Forlorn Patio shop"},
+    };
+    print("Loaded " + shopSplits.Count + " shops/teleporters");
     
     // Add header settings
     settings.Add("bosses", true, "Bosses");
     settings.Add("rooms", true, "Rooms");
     settings.Add("items", true, "Items");
     settings.Add("abilities", true, "Abilities/Weapons");
+    settings.Add("shops", true, "Shops/Teleporters");
 
     // Add boss settings
     settings.CurrentDefaultParent = "bosses";
@@ -222,6 +241,13 @@ startup
     foreach (var ability in abilitySplits)
     {
         settings.Add("A_" + ability.Key, false, ability.Value);
+    }
+
+    //add shops settings
+    settings.CurrentDefaultParent = "shops";
+    foreach (var shop in shopSplits)
+    {
+        settings.Add("S_" + shop.Key, false, shop.Value);
     }
 
     // Change timing method to game time (Not my own, taken from another autosplitter)
