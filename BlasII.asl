@@ -21,7 +21,7 @@ state("Blasphemous 2", "1.0.5")
     int      bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x30;
     int    lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x50;
     int   infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x70;
-    int characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x468, 0x38,  0x20,  0x2A8, 0x18,  0x120, 0x98;
+    int characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x1E8, 0x18,  0x20,  0x30,  0x90,  0x18,  0x120, 0x98;
 }
 
 state("Blasphemous 2", "1.1.0")
@@ -39,13 +39,17 @@ state("Blasphemous 2", "1.1.0")
 
 start
 {
-    if (old.mainRoom == 0 && current.mainRoom != 0)
-    {
-        vars.bossesKilled.Clear();
-        vars.roomsEntered.Clear();
-        vars.isPhaseTwo = false;
-        return true;
-    }
+    return old.mainRoom == 0 && current.mainRoom != 0;
+}
+
+onStart
+{
+    vars.bossesKilled.Clear();
+    vars.roomsEntered.Clear();
+    vars.itemsAcquired.Clear();
+    vars.abilitiesAcquired.Clear();
+    vars.shopsUsed.Clear();
+    vars.isPhaseTwo = false;
 }
 
 split
@@ -55,7 +59,6 @@ split
         // Check if any bosses were just killed
         bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom != 0x07B20A5A && current.characterHealth != 0;
         bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.characterHealth != 0;
-        //bool devotion = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.characterHealth != 0;
         bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.characterHealth != 0;
 
         // If it was eviterno phase 1, change the flag but dont split
