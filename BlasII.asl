@@ -13,57 +13,82 @@ state("Blasphemous 2", "Unknown")
 
 state("Blasphemous 2", "1.0.5")
 {
-    bool     isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0,  0x30,  0x190;
-    uint     earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x270, 0x20,  0x14;
-    uint      mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28,  0x0;
-    uint      lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x150, 0x70;
-    int     enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
-    int     bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x30;
-    int   lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x50;
-    int  infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8, 0x58, 0x40, 0x38, 0x70;
+    bool      isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0,  0x30,  0x190;
+    uint      earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x270, 0x20,  0x14;
+    uint       mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28,  0x0;
+    uint       lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x150, 0x70;
+    //int      enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
+    int      bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x30;
+    int    lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x50;
+    int   infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x70;
+    int characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x1E8, 0x18,  0x20,  0x30,  0x90,  0x18,  0x120, 0x98;
 }
 
 state("Blasphemous 2", "1.1.0")
 {
-    bool     isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x30,  0x190;
-    uint     earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20,  0x14;
-    uint      mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28,  0x0;
-    uint      lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
-    int     enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
-    int     bossHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x30;
-    int   lesmesHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x50;
-    int  infantaHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8, 0xA30, 0x0, 0x7C8, 0x40, 0x38, 0x70;
+    bool      isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x30,  0x190;
+    uint      earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20,  0x14;
+    uint       mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28,  0x0;
+    uint       lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
+    //int      enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
+    int      bossHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x30;
+    int    lesmesHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x50;
+    int   infantaHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x70;
+    int characterHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x38,  0x208, 0x2B8, 0x1C0, 0x148;
 }
 
 start
 {
-    if (old.mainRoom == 0 && current.mainRoom != 0)
-    {
-        vars.bossesKilled.Clear();
-        vars.roomsEntered.Clear(); 
-        return true;
-    }
+    return old.mainRoom == 0 && current.mainRoom != 0;
+}
+
+onStart
+{
+    vars.bossesKilled.Clear();
+    vars.roomsEntered.Clear();
+    vars.itemsAcquired.Clear();
+    vars.abilitiesAcquired.Clear();
+    vars.shopsUsed.Clear();
+    vars.isPhaseTwo = false;
 }
 
 split
 {
-    if (current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == current.earlyRoom && settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
+    if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
-        vars.bossesKilled.Add(current.mainRoom);
-        return true;
+        // Check if any bosses were just killed
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom != 0x07B20A5A && current.characterHealth != 0;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && current.characterHealth != 0;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.characterHealth != 0;
+
+        // If it was eviterno phase 1, change the flag but dont split
+        if (eviterno && !vars.isPhaseTwo)
+        {
+            vars.isPhaseTwo = true;
+            return false;
+        }
+
+        // If it was a real boss, split
+        if (standard || eviterno && vars.isPhaseTwo || lesmes)
+        {
+            vars.bossesKilled.Add(current.mainRoom);
+            return true;
+        }
     }
 
-    if (current.mainRoom != old.mainRoom && settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+    if (current.mainRoom != old.mainRoom)
     {
-        vars.roomsEntered.Add(current.mainRoom);
-        return true;
+        // Whenever changing rooms, reset the phase flag
+        vars.isPhaseTwo = false;
+
+        // Ensure that it was a valid room that was entered
+        if (settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+        {
+            vars.roomsEntered.Add(current.mainRoom);
+            return true;
+        }
     }
-    
-    // Need to use custom health instead of boss health
-    // bool lesmes = current.mainRoom == 0x07B20A5A && current.earlyRoom == 0x07B20A5A && current.lateRoom == 0x07B20A5A && current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && settings["lesmes"];
-    // Need to use different early room instead of main room
-    // bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.lateRoom == 0x9AB9D532 && current.bossHealth == 0 && old.bossHealth != 0 && settings["devotion"];
-    
+
     return false;
 }
 
@@ -78,6 +103,7 @@ startup
     
     vars.bossesKilled = new List<uint>();
     vars.roomsEntered = new List<uint>();
+    vars.isPhaseTwo = false;
     
     var bossSplits = new Dictionary<uint, string>()
     {
@@ -90,8 +116,7 @@ startup
         { 0xF8126154, "Odon" },
         { 0x556AEC39, "Sinodo" },
         { 0x556AEC59, "Svsona" },
-        { 0x9AB9D533, "Eviterno phase 1" },
-        { 0x00000005, "Eviterno phase 2" },
+        { 0x9AB9D533, "Eviterno" },
         { 0x9AB9D532, "Devotion Incarnate" },
     };
     print("Loaded " + bossSplits.Count + " bosses");
