@@ -27,7 +27,10 @@ There will be 3 adresses find the 2 with the lowest value and keep the one that 
 Pointers are quite long, find 6-7 offsets long pointers with the right base adress then search for longer pointers by fixing the last 4/5 offests so it's fast enough.
 
 ### infantaHealth
-Add Ox20 to the last offset of bossHP
+Add Ox20 to the last offset of bossHealth.
 
 ### lesmesHealth
-Add Ox40 to the last offset of bossHP
+Add Ox40 to the last offset of bossHealth.
+
+### characterHealth
+Check TPO's Health on the pause menu and search for this value.
