@@ -1,15 +1,15 @@
 state("Blasphemous 2", "Unknown")
 {
-    bool     isPlaying : 0;
-    uint     earlyRoom : 0;
-    uint      mainRoom : 0;
-    uint      lateRoom : 0;
-    int     enemyCount : 0;
-    int     bossHealth : 0;
-    int   lesmesHealth : 0;
-    int  infantaHealth : 0;
-    bool isInputLocked : 0;
-    bool  isItemPickUp : 0;
+    bool           isPlaying : 0;
+    uint           earlyRoom : 0;
+    uint            mainRoom : 0;
+    uint            lateRoom : 0;
+    int           bossHealth : 0;
+    int         lesmesHealth : 0;
+    int        infantaHealth : 0;
+    int      characterHealth : 0;
+    bool       isInputLocked : 0;
+    float characterPositionX : 0;
 }
 
 state("Blasphemous 2", "1.0.5")
@@ -18,14 +18,11 @@ state("Blasphemous 2", "1.0.5")
     uint           earlyRoom : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x270, 0x20,  0x14;
     uint            mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x2D0, 0x28,  0x0;
     uint            lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x3C8, 0x150, 0x70;
-    //int         enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x4E8, 0x178, 0x80;
     int           bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x30;
     int         lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x50;
     int        infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x70;
     int      characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x1E8, 0x18,  0x20,  0x30,  0x90,  0x18,  0x120, 0x98;
     bool       isInputLocked : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x510, 0x198, 0x78;
-    bool        isItemPickUp : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x3C8, 0x38,  0xA8,  0x18,  0x258, 0x70;
-    //float characterPositionY : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x38,  0x60,  0x148, 0x274;
     float characterPositionX : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x38,  0x60,  0x48,  0xDC;
 }
 
@@ -35,14 +32,12 @@ state("Blasphemous 2", "1.1.0")
     uint           earlyRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x20,  0x14;
     uint            mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28,  0x0;
     uint            lateRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x150, 0x70;
-    //int         enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
     int           bossHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x30;
     int         lesmesHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x50;
     int        infantaHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x70;
     int      characterHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x38,  0x208, 0x2B8, 0x1C0, 0x148;
-    bool       isInputLocked : 0;
-    bool        isItemPickUp : 0;
-    float characterPositionX : 0;
+    bool       isInputLocked : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x10,  0x78;
+    float characterPositionX : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x38,  0x68,  0xE4;
 }
 
 start
@@ -54,7 +49,6 @@ onStart
 {
     vars.bossesKilled.Clear();
     vars.roomsEntered.Clear();
-    vars.itemsAcquired.Clear();
     vars.abilitiesAcquired.Clear();
     vars.shopsUsed.Clear();
     vars.isPhaseTwo = false;
@@ -98,15 +92,9 @@ split
         }
     }
 
-    if (current.mainRoom == current.lateRoom && current.isItemPickUp && settings["I_" + current.mainRoom] && !vars.itemsAcquired.Contains(current.mainRoom))
-    {
-        vars.itemsAcquired.Add(current.mainRoom);
-        return true;
-    }
-
     if (current.earlyRoom == old.lateRoom && current.isInputLocked && settings["A_" + current.mainRoom] && !vars.abilitiesAcquired.Contains(current.mainRoom))
     {
-        if(current.mainRoom == 0x07B20A62 && current.characterPositionX < 805) return false;
+        if(current.mainRoom == 0x07B20A62 && (int) current.characterPositionX < 805) return false;
         vars.abilitiesAcquired.Add(current.mainRoom);
         return true;
     }
@@ -137,7 +125,6 @@ startup
     
     vars.bossesKilled = new List<uint>();
     vars.roomsEntered = new List<uint>();
-    vars.itemsAcquired = new List<uint>();
     vars.abilitiesAcquired = new List<uint>();
     vars.shopsUsed = new List<uint>();
     vars.isPhaseTwo = false;
@@ -176,18 +163,6 @@ startup
     };
     print("Loaded " + roomSplits.Count + " rooms");
 
-    var itemSplits = new Dictionary<uint, string>()
-    {
-        { 0xF812602A, "Mirabas"},
-        { 0xEFA86829, "The Punished One"},
-        { 0x5DD4E501, "Sea of Ink Forgotten Tribute"},
-        { 0xEFA868CF, "Bleeding Miracle"},
-        { 0xEFA868CC, "Embossed Rat Skull"},
-        { 0x5DD4E47C, "Gregal"},
-        { 0xEFA86827, "The Guide"},
-    };
-    print("Loaded " + itemSplits.Count + " items");
-
     var abilitySplits = new Dictionary<uint, string>()
     {
         { 0xF8126038, "Ivy of ascension (Wall jump)"},
@@ -199,7 +174,7 @@ startup
         { 0xF8126191, "Veredicto Elevated Temples upgrade"},
         { 0xEFA86829, "Ruego"},
         { 0x007C58FA, "Ruego Mother of Mothers upgrade"},
-        { 0x07B20A62, "Ruego Crown of Towers upgrade"}, // can get wrong split because of statue in the room, might need special case.
+        { 0x07B20A62, "Ruego Crown of Towers upgrade"},
         { 0x4D00F3CA, "Sarmiento & Cantella"},
         { 0xE008BF66, "S&C Elevated Temples upgrade"},
         { 0xEFA8688A, "S&C Choir of Thorns upgrade"}
@@ -220,7 +195,6 @@ startup
     // Add header settings
     settings.Add("bosses", true, "Bosses");
     settings.Add("rooms", true, "Rooms");
-    settings.Add("items", true, "Items");
     settings.Add("abilities", true, "Abilities/Weapons");
     settings.Add("shops", true, "Shops/Teleporters");
 
@@ -236,13 +210,6 @@ startup
     foreach (var room in roomSplits)
     {
         settings.Add("R_" + room.Key, false, room.Value);
-    }
-
-    //add items settings
-    settings.CurrentDefaultParent = "items";
-    foreach (var item in itemSplits)
-    {
-        settings.Add("I_" + item.Key, false, item.Value);
     }
 
     //add items settings

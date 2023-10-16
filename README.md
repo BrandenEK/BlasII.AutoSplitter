@@ -18,9 +18,6 @@ Go back and forth between some of these known room values. It should be the firs
 ### lateRoom
 First find the main room hash.  There should be five consistent addresses, this one will be locked when using a ladder to change scenes.
 
-### enemyCount
-Start in Profundo Lamento to narrow it down to about fifteen enemy counts.  Then enter the Chiseled One boss fight.  It should be 0 at first, and should only change to 1 once his wheel hits the ground.  There will be two addresses, use the second one.
-
 ### bossHealth
 Go to The Faceless One (tutorial boss), value should be 500 and decreasing with each hit.
 There will be 3 adresses find the 2 with the lowest value and keep the one that resets to 0 upon quitting to main menu
