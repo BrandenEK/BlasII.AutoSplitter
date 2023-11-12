@@ -42,7 +42,10 @@ state("Blasphemous 2", "1.1.0")
 
 start
 {
-    return current.mainRoom != old.mainRoom && settings["S_" + current.mainRoom];
+    if (settings["wsroom"]) return old.mainRoom != 0x9AB9D550 && current.mainRoom == 0x9AB9D550;
+    else return old.mainRoom == 0 && current.mainRoom != 0;
+
+
 }
 
 onStart
@@ -208,11 +211,8 @@ startup
 
     // Add start settings
     settings.CurrentDefaultParent = "start";
-    settings.Add("S_0x9AB9D550", true, "Weapon select room");
-    foreach (var start in startTriggers)
-    {
-        settings.Add("S_" + start.Key, false, start.Value);
-    }
+    settings.Add("file", false, "File select");
+    settings.Add("wsroom", true, "Weapon select room");
 
     // Add boss settings
     settings.CurrentDefaultParent = "bosses";
