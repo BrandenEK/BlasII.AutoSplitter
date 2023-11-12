@@ -42,7 +42,7 @@ state("Blasphemous 2", "1.1.0")
 
 start
 {
-    return old.mainRoom == 0 && current.mainRoom != 0;
+    return current.mainRoom != old.mainRoom && settings["S_" + current.mainRoom];
 }
 
 onStart
@@ -99,7 +99,7 @@ split
         return true;
     }
 
-    if (current.isInputLocked && settings["S_" + current.mainRoom] && !vars.shopsUsed.Contains(current.mainRoom))
+    if (current.isInputLocked && settings["T_" + current.mainRoom] && !vars.shopsUsed.Contains(current.mainRoom))
     {
         bool standard = current.earlyRoom == old.lateRoom && current.lateRoom != 0x556AEBD6;
         bool patio = current.mainRoom == 0x5DD4E43B && (int) current.characterPositionX < 32;
@@ -129,6 +129,11 @@ startup
     vars.shopsUsed = new List<uint>();
     vars.isPhaseTwo = false;
     
+    var startTriggers = new Dictionary<uint, string>()
+    {
+        {0, "File Select"},
+    };
+
     var bossSplits = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Faceless One" },
@@ -186,6 +191,7 @@ startup
     {
         { 0xAA597EF5, "Crown of Towers teleporter"},
         { 0x4D00F471, "Sacred Entombments teleporter"},
+        { 0xF8126195, "Elevated Temples Teleporter"},
         { 0x81D8A9E6, "City shop"},
         { 0x81D8A9E5, "The Sculptor"},
         { 0x81D8A9E4, "The Confessor"},
@@ -194,10 +200,19 @@ startup
     print("Loaded " + shopSplits.Count + " shops/teleporters");
     
     // Add header settings
+    settings.Add("start", true, "Timer start");
     settings.Add("bosses", true, "Bosses");
     settings.Add("rooms", true, "Rooms");
     settings.Add("abilities", true, "Abilities/Weapons");
     settings.Add("shops", true, "Shops/Teleporters");
+
+    // Add start settings
+    settings.CurrentDefaultParent = "start";
+    settings.Add("S_0x9AB9D550", true, "Weapon select room");
+    foreach (var start in startTriggers)
+    {
+        settings.Add("S_" + start.Key, false, start.Value);
+    }
 
     // Add boss settings
     settings.CurrentDefaultParent = "bosses";
@@ -224,7 +239,7 @@ startup
     settings.CurrentDefaultParent = "shops";
     foreach (var shop in shopSplits)
     {
-        settings.Add("S_" + shop.Key, false, shop.Value);
+        settings.Add("T_" + shop.Key, false, shop.Value);
     }
 
     // Change timing method to game time (Not my own, taken from another autosplitter)
