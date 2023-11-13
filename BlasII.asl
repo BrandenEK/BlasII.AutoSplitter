@@ -54,8 +54,8 @@ onStart
     vars.bossSplits.Clear();
     vars.abilitySplits.Clear();
     vars.weaponSplits.Clear();
+    vars.roomSplits.Clear();
 
-    vars.roomsEntered.Clear();
     vars.shopsUsed.Clear();
     vars.isPhaseTwo = false;
 }
@@ -105,8 +105,7 @@ split
         return true;
     }
 
-    // Temp
-
+    // Rooms
 
     if (current.mainRoom != old.mainRoom)
     {
@@ -114,12 +113,17 @@ split
         vars.isPhaseTwo = false;
 
         // Ensure that it was a valid room that was entered
-        if (settings["R_" + current.mainRoom] && !vars.roomsEntered.Contains(current.mainRoom))
+        if (settings["R_" + current.mainRoom] && !vars.roomSplits.Contains(current.mainRoom))
         {
-            vars.roomsEntered.Add(current.mainRoom);
+            vars.roomSplits.Add(current.mainRoom);
             return true;
         }
     }
+
+    // Temp
+
+
+
 
     if (current.isInputLocked && settings["T_" + current.mainRoom] && !vars.shopsUsed.Contains(current.mainRoom))
     {
@@ -151,8 +155,8 @@ startup
     settings.Add("bosses", true, "Bosses");
     settings.Add("abilities", true, "Abilities");
     settings.Add("weapons", true, "Weapons");
-
     settings.Add("rooms", true, "Rooms");
+
     settings.Add("shops", true, "Shops/Teleporters");
 
     // Bosses
@@ -221,14 +225,8 @@ startup
         settings.Add("W_" + weapon.Key, false, weapon.Value);
     }
 
-    // temp
+    // Rooms
 
-
-    vars.roomsEntered = new List<uint>();
-    vars.shopsUsed = new List<uint>();
-
-    
-    
     var roomSplits = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Faceless One room" },
@@ -247,6 +245,22 @@ startup
         { 0x9AB9D532, "Devotion Incarnate room" }
     };
     print("Loaded " + roomSplits.Count + " rooms");
+    vars.roomSplits = new List<uint>();
+
+    settings.CurrentDefaultParent = "rooms";
+    foreach (var room in roomSplits)
+    {
+        settings.Add("R_" + room.Key, false, room.Value);
+    }
+
+    // temp
+
+
+    vars.shopsUsed = new List<uint>();
+
+    
+    
+    
 
     var shopSplits = new Dictionary<uint, string>()
     {
@@ -259,13 +273,6 @@ startup
         { 0x5DD4E43B, "Forlorn Patio shop"},
     };
     print("Loaded " + shopSplits.Count + " shops/teleporters");
-    
-    // Add room settings
-    settings.CurrentDefaultParent = "rooms";
-    foreach (var room in roomSplits)
-    {
-        settings.Add("R_" + room.Key, false, room.Value);
-    }
 
     //add shops settings
     settings.CurrentDefaultParent = "shops";
