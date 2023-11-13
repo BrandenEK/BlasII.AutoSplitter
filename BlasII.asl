@@ -51,10 +51,10 @@ start
 
 onStart
 {
+    vars.bossSplits.Clear();
     vars.abilitySplits.Clear();
     vars.weaponSplits.Clear();
 
-    vars.bossesKilled.Clear();
     vars.roomsEntered.Clear();
     vars.shopsUsed.Clear();
     vars.isPhaseTwo = false;
@@ -62,6 +62,30 @@ onStart
 
 split
 {
+    // Bosses
+
+    if (settings["B_" + current.mainRoom] && !vars.bossSplits.Contains(current.mainRoom))
+    {
+        // Check if any bosses were just killed
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom != 0x07B20A5A && old.playerHealth != 0;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && old.playerHealth != 0;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && old.playerHealth != 0;
+
+        // If it was eviterno phase 1, change the flag but dont split
+        if (eviterno && !vars.isPhaseTwo)
+        {
+            vars.isPhaseTwo = true;
+            return false;
+        }
+
+        // If it was a real boss, split
+        if (standard || eviterno && vars.isPhaseTwo || lesmes)
+        {
+            vars.bossSplits.Add(current.mainRoom);
+            return true;
+        }
+    }
+
     // Abilities
 
     if (settings["A_" + current.mainRoom] && current.earlyRoom == old.lateRoom && current.isInputLocked && !vars.abilitySplits.Contains(current.mainRoom))
@@ -81,27 +105,8 @@ split
         return true;
     }
 
-    if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
-    {
-        // Check if any bosses were just killed
-        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom != 0x07B20A5A && old.playerHealth != 0;
-        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && old.playerHealth != 0;
-        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && old.playerHealth != 0;
+    // Temp
 
-        // If it was eviterno phase 1, change the flag but dont split
-        if (eviterno && !vars.isPhaseTwo)
-        {
-            vars.isPhaseTwo = true;
-            return false;
-        }
-
-        // If it was a real boss, split
-        if (standard || eviterno && vars.isPhaseTwo || lesmes)
-        {
-            vars.bossesKilled.Add(current.mainRoom);
-            return true;
-        }
-    }
 
     if (current.mainRoom != old.mainRoom)
     {
@@ -140,13 +145,40 @@ startup
 {
     print("BlasII initialization");
     settings.Add("wstart", true, "Start timer on Weapon Select room");
+    vars.isPhaseTwo = false;
 
     // Add header settings
     settings.Add("bosses", true, "Bosses");
-    settings.Add("rooms", true, "Rooms");
     settings.Add("abilities", true, "Abilities");
     settings.Add("weapons", true, "Weapons");
+
+    settings.Add("rooms", true, "Rooms");
     settings.Add("shops", true, "Shops/Teleporters");
+
+    // Bosses
+
+    var bossSplits = new Dictionary<uint, string>()
+    {
+        { 0x4D00F491, "Faceless One" },
+        { 0x07B20B3D, "Radames" },
+        { 0xAA597F36, "Orospina" },
+        { 0x07B20A5A, "Lesmes" },
+        { 0x5DD4E45B, "Afilaor" },
+        { 0xF8126136, "Benedicta" },
+        { 0xF8126154, "Odon" },
+        { 0x556AEC39, "Sinodo" },
+        { 0x556AEC59, "Svsona" },
+        { 0x9AB9D533, "Eviterno" },
+        { 0x9AB9D532, "Devotion Incarnate" }
+    };
+    print("Loaded " + bossSplits.Count + " bosses");
+    vars.bossSplits = new List<uint>();
+
+    settings.CurrentDefaultParent = "bosses";
+    foreach (var boss in bossSplits)
+    {
+        settings.Add("B_" + boss.Key, false, boss.Value);
+    }
 
     // Abilities
 
@@ -189,28 +221,13 @@ startup
         settings.Add("W_" + weapon.Key, false, weapon.Value);
     }
 
+    // temp
 
-    vars.bossesKilled = new List<uint>();
+
     vars.roomsEntered = new List<uint>();
-    vars.abilitiesAcquired = new List<uint>();
     vars.shopsUsed = new List<uint>();
-    vars.isPhaseTwo = false;
 
-    var bossSplits = new Dictionary<uint, string>()
-    {
-        { 0x4D00F491, "Faceless One" },
-        { 0x07B20B3D, "Radames" },
-        { 0xAA597F36, "Orospina" },
-        { 0x07B20A5A, "Lesmes" },
-        { 0x5DD4E45B, "Afilaor" },
-        { 0xF8126136, "Benedicta" },
-        { 0xF8126154, "Odon" },
-        { 0x556AEC39, "Sinodo" },
-        { 0x556AEC59, "Svsona" },
-        { 0x9AB9D533, "Eviterno" },
-        { 0x9AB9D532, "Devotion Incarnate" }
-    };
-    print("Loaded " + bossSplits.Count + " bosses");
+    
     
     var roomSplits = new Dictionary<uint, string>()
     {
@@ -242,13 +259,6 @@ startup
         { 0x5DD4E43B, "Forlorn Patio shop"},
     };
     print("Loaded " + shopSplits.Count + " shops/teleporters");
-    
-    // Add boss settings
-    settings.CurrentDefaultParent = "bosses";
-    foreach (var boss in bossSplits)
-    {
-        settings.Add("B_" + boss.Key, false, boss.Value);
-    }
     
     // Add room settings
     settings.CurrentDefaultParent = "rooms";
