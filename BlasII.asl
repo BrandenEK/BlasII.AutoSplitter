@@ -51,15 +51,36 @@ start
 
 onStart
 {
+    vars.abilitySplits.Clear();
+    vars.weaponSplits.Clear();
+
     vars.bossesKilled.Clear();
     vars.roomsEntered.Clear();
-    vars.abilitiesAcquired.Clear();
     vars.shopsUsed.Clear();
     vars.isPhaseTwo = false;
 }
 
 split
 {
+    // Abilities
+
+    if (settings["A_" + current.mainRoom] && current.earlyRoom == old.lateRoom && current.isInputLocked && !vars.abilitySplits.Contains(current.mainRoom))
+    {
+        vars.abilitySplits.Add(current.mainRoom);
+        return true;
+    }
+
+    // Weapons
+
+    if (settings["W_" + current.mainRoom] && current.earlyRoom == old.lateRoom && current.isInputLocked && !vars.weaponSplits.Contains(current.mainRoom))
+    {
+        if(current.mainRoom == 0x07B20A62 && (int) current.playerPositionX < 805)
+            return false;
+
+        vars.weaponSplits.Add(current.mainRoom);
+        return true;
+    }
+
     if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
         // Check if any bosses were just killed
@@ -95,13 +116,6 @@ split
         }
     }
 
-    if (current.earlyRoom == old.lateRoom && current.isInputLocked && settings["A_" + current.mainRoom] && !vars.abilitiesAcquired.Contains(current.mainRoom))
-    {
-        if(current.mainRoom == 0x07B20A62 && (int) current.playerPositionX < 805) return false;
-        vars.abilitiesAcquired.Add(current.mainRoom);
-        return true;
-    }
-
     if (current.isInputLocked && settings["T_" + current.mainRoom] && !vars.shopsUsed.Contains(current.mainRoom))
     {
         bool standard = current.earlyRoom == old.lateRoom && current.lateRoom != 0x556AEBD6;
@@ -125,7 +139,57 @@ isLoading
 startup
 {
     print("BlasII initialization");
-    
+    settings.Add("wstart", true, "Start timer on Weapon Select room");
+
+    // Add header settings
+    settings.Add("bosses", true, "Bosses");
+    settings.Add("rooms", true, "Rooms");
+    settings.Add("abilities", true, "Abilities");
+    settings.Add("weapons", true, "Weapons");
+    settings.Add("shops", true, "Shops/Teleporters");
+
+    // Abilities
+
+    var abilitySplits = new Dictionary<uint, string>()
+    {
+        { 0xF8126038, "Ivy of ascension (Wall jump)" },
+        { 0x5DD4E457, "Passage of ash (Double jump)" },
+        { 0x07B20A53, "Mercy of the wind (Air dash)" },
+        { 0xF81260D5, "Scion's protection (Ring grab)" },
+    };
+    print("Loaded " + abilitySplits.Count + " abilities");
+    vars.abilitySplits = new List<uint>();
+
+    settings.CurrentDefaultParent = "abilities";
+    foreach (var ability in abilitySplits)
+    {
+        settings.Add("A_" + ability.Key, false, ability.Value);
+    }
+
+    // Weapons
+
+    var weaponSplits = new Dictionary<uint, string>()
+    {
+        { 0x07B20B3B, "Veredicto" },
+        { 0x9AB9D5EC, "Veredicto - Sunken Cathedral" },
+        { 0xF8126191, "Veredicto - Elevated Temples" },
+        { 0xEFA86829, "Ruego" },
+        { 0x007C58FA, "Ruego - Mother of Mothers" },
+        { 0x07B20A62, "Ruego - Crown of Towers" },
+        { 0x4D00F3CA, "Sarmiento" },
+        { 0xE008BF66, "Sarmiento - Elevated Temples" },
+        { 0xEFA8688A, "Sarmiento - Choir of Thorns" }
+    };
+    print("Loaded " + weaponSplits.Count + " weapons");
+    vars.weaponSplits = new List<uint>();
+
+    settings.CurrentDefaultParent = "weapons";
+    foreach (var weapon in weaponSplits)
+    {
+        settings.Add("W_" + weapon.Key, false, weapon.Value);
+    }
+
+
     vars.bossesKilled = new List<uint>();
     vars.roomsEntered = new List<uint>();
     vars.abilitiesAcquired = new List<uint>();
@@ -167,24 +231,6 @@ startup
     };
     print("Loaded " + roomSplits.Count + " rooms");
 
-    var abilitySplits = new Dictionary<uint, string>()
-    {
-        { 0xF8126038, "Ivy of ascension (Wall jump)"},
-        { 0x5DD4E457, "Passage of ash (Double jump)"},
-        { 0x07B20A53, "Mercy of the wind (Air dash)"},
-        { 0xF81260D5, "Scion's protection (Ring grab)"},
-        { 0x07B20B3B, "Veredicto"},
-        { 0x9AB9D5EC, "Veredicto Sunken Cathedral upgrade"},
-        { 0xF8126191, "Veredicto Elevated Temples upgrade"},
-        { 0xEFA86829, "Ruego"},
-        { 0x007C58FA, "Ruego Mother of Mothers upgrade"},
-        { 0x07B20A62, "Ruego Crown of Towers upgrade"},
-        { 0x4D00F3CA, "Sarmiento & Cantella"},
-        { 0xE008BF66, "S&C Elevated Temples upgrade"},
-        { 0xEFA8688A, "S&C Choir of Thorns upgrade"}
-    };
-    print("Loaded " + abilitySplits.Count + " abilities");
-
     var shopSplits = new Dictionary<uint, string>()
     {
         { 0xAA597EF5, "Crown of Towers teleporter"},
@@ -197,14 +243,6 @@ startup
     };
     print("Loaded " + shopSplits.Count + " shops/teleporters");
     
-    settings.Add("wstart", true, "Start timer on Weapon Select room");
-
-    // Add header settings
-    settings.Add("bosses", true, "Bosses");
-    settings.Add("rooms", true, "Rooms");
-    settings.Add("abilities", true, "Abilities/Weapons");
-    settings.Add("shops", true, "Shops/Teleporters");
-
     // Add boss settings
     settings.CurrentDefaultParent = "bosses";
     foreach (var boss in bossSplits)
@@ -217,13 +255,6 @@ startup
     foreach (var room in roomSplits)
     {
         settings.Add("R_" + room.Key, false, room.Value);
-    }
-
-    //add items settings
-    settings.CurrentDefaultParent = "abilities";
-    foreach (var ability in abilitySplits)
-    {
-        settings.Add("A_" + ability.Key, false, ability.Value);
     }
 
     //add shops settings
