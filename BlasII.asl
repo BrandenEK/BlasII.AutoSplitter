@@ -7,9 +7,9 @@ state("Blasphemous 2", "Unknown")
     int           bossHealth : 0;
     int         lesmesHealth : 0;
     int        infantaHealth : 0;
-    int      characterHealth : 0;
+    int         playerHealth : 0;
     bool       isInputLocked : 0;
-    float characterPositionX : 0;
+    float    playerPositionX : 0;
 }
 
 state("Blasphemous 2", "1.0.5")
@@ -21,9 +21,9 @@ state("Blasphemous 2", "1.0.5")
     int           bossHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x30;
     int         lesmesHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x50;
     int        infantaHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x40,  0x80,  0x6A8, 0x210, 0x478, 0xB8,  0x58,  0x40,  0x38,  0x70;
-    int      characterHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x1E8, 0x18,  0x20,  0x30,  0x90,  0x18,  0x120, 0x98;
+    int         playerHealth : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x1E8, 0x18,  0x20,  0x30,  0x90,  0x18,  0x120, 0x98;
     bool       isInputLocked : "GameAssembly.dll", 0x336A6F0, 0xB8,  0x468, 0xB0, 0x78;
-    float characterPositionX : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x38,  0x60,  0x48,  0xDC;
+    float    playerPositionX : "GameAssembly.dll", 0x336A6F0, 0xB8,  0xE0,  0x38,  0x60,  0x48,  0xDC;
 }
 
 state("Blasphemous 2", "1.1.0")
@@ -35,9 +35,9 @@ state("Blasphemous 2", "1.1.0")
     int           bossHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x30;
     int         lesmesHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x50;
     int        infantaHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x1C0, 0x0,   0x438, 0xA8,  0xA30, 0x0,   0x7C8, 0x40,  0x38,  0x70;
-    int      characterHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x38,  0x208, 0x2B8, 0x1C0, 0x148;
+    int         playerHealth : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x268, 0x38,  0x208, 0x2B8, 0x1C0, 0x148;
     bool       isInputLocked : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x10,  0x78;
-    float characterPositionX : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x38,  0x68,  0xE4;
+    float    playerPositionX : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0,  0x38,  0x68,  0xE4;
 }
 
 start
@@ -63,9 +63,9 @@ split
     if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
         // Check if any bosses were just killed
-        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom != 0x07B20A5A && old.characterHealth != 0;
-        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && old.characterHealth != 0;
-        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && old.characterHealth != 0;
+        bool standard = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom != 0x07B20A5A && old.playerHealth != 0;
+        bool eviterno = current.bossHealth == 0 && old.bossHealth != 0 && current.mainRoom == 0x9AB9D533 && old.playerHealth != 0;
+        bool lesmes = current.lesmesHealth == 0 && current.infantaHealth == 0 && (old.lesmesHealth != 0 || old.infantaHealth != 0) && current.mainRoom == current.earlyRoom && old.playerHealth != 0;
 
         // If it was eviterno phase 1, change the flag but dont split
         if (eviterno && !vars.isPhaseTwo)
@@ -97,7 +97,7 @@ split
 
     if (current.earlyRoom == old.lateRoom && current.isInputLocked && settings["A_" + current.mainRoom] && !vars.abilitiesAcquired.Contains(current.mainRoom))
     {
-        if(current.mainRoom == 0x07B20A62 && (int) current.characterPositionX < 805) return false;
+        if(current.mainRoom == 0x07B20A62 && (int) current.playerPositionX < 805) return false;
         vars.abilitiesAcquired.Add(current.mainRoom);
         return true;
     }
@@ -105,7 +105,7 @@ split
     if (current.isInputLocked && settings["T_" + current.mainRoom] && !vars.shopsUsed.Contains(current.mainRoom))
     {
         bool standard = current.earlyRoom == old.lateRoom && current.lateRoom != 0x556AEBD6;
-        bool patio = current.mainRoom == 0x5DD4E43B && (int) current.characterPositionX < 32;
+        bool patio = current.mainRoom == 0x5DD4E43B && (int) current.playerPositionX < 32;
 
         if (standard || patio)
         {
