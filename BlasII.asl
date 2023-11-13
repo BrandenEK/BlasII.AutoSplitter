@@ -42,10 +42,11 @@ state("Blasphemous 2", "1.1.0")
 
 start
 {
-    if (settings["wsroom"]) return old.mainRoom != 0x9AB9D550 && current.mainRoom == 0x9AB9D550;
-    else return old.mainRoom == 0 && current.mainRoom != 0;
+    // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
+    uint oldRoom = (uint)(settings["wstart"] ? 0x4D00F498 : 0);
+    uint newRoom = (uint)(settings["wstart"] ? 0x9AB9D550 : 0x4D00F498);
 
-
+    return old.mainRoom == oldRoom && current.mainRoom == newRoom;
 }
 
 onStart
@@ -59,7 +60,6 @@ onStart
 
 split
 {
-    //print (vars.itemsAcquired[0]);
     if (settings["B_" + current.mainRoom] && !vars.bossesKilled.Contains(current.mainRoom))
     {
         // Check if any bosses were just killed
@@ -131,11 +131,6 @@ startup
     vars.abilitiesAcquired = new List<uint>();
     vars.shopsUsed = new List<uint>();
     vars.isPhaseTwo = false;
-    
-    var startTriggers = new Dictionary<uint, string>()
-    {
-        {0, "File Select"},
-    };
 
     var bossSplits = new Dictionary<uint, string>()
     {
@@ -202,17 +197,13 @@ startup
     };
     print("Loaded " + shopSplits.Count + " shops/teleporters");
     
+    settings.Add("wstart", true, "Start timer on Weapon Select room");
+
     // Add header settings
-    settings.Add("start", true, "Timer start");
     settings.Add("bosses", true, "Bosses");
     settings.Add("rooms", true, "Rooms");
     settings.Add("abilities", true, "Abilities/Weapons");
     settings.Add("shops", true, "Shops/Teleporters");
-
-    // Add start settings
-    settings.CurrentDefaultParent = "start";
-    settings.Add("file", false, "File select");
-    settings.Add("wsroom", true, "Weapon select room");
 
     // Add boss settings
     settings.CurrentDefaultParent = "bosses";
