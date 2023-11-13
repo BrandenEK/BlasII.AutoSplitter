@@ -55,8 +55,8 @@ onStart
     vars.abilitySplits.Clear();
     vars.weaponSplits.Clear();
     vars.roomSplits.Clear();
-
-    vars.shopsUsed.Clear();
+    vars.warpSplits.Clear();
+    vars.shopSplits.Clear();
     vars.isPhaseTwo = false;
 }
 
@@ -120,19 +120,24 @@ split
         }
     }
 
-    // Temp
+    // Warps
 
+    if (settings["W_" + current.mainRoom] && current.isInputLocked && !vars.warpSplits.Contains(current.mainRoom))
+    {
+        vars.warpSplits.Add(current.mainRoom);
+        return true;
+    }
 
+    // Shops
 
-
-    if (current.isInputLocked && settings["T_" + current.mainRoom] && !vars.shopsUsed.Contains(current.mainRoom))
+    if (settings["S_" + current.mainRoom] && current.isInputLocked && !vars.shopSplits.Contains(current.mainRoom))
     {
         bool standard = current.earlyRoom == old.lateRoom && current.lateRoom != 0x556AEBD6;
         bool patio = current.mainRoom == 0x5DD4E43B && (int) current.playerPositionX < 32;
 
         if (standard || patio)
         {
-            vars.shopsUsed.Add(current.mainRoom);
+            vars.shopSplits.Add(current.mainRoom);
             return true;
         }
     }
@@ -150,14 +155,6 @@ startup
     print("BlasII initialization");
     settings.Add("wstart", true, "Start timer on Weapon Select room");
     vars.isPhaseTwo = false;
-
-    // Add header settings
-    settings.Add("bosses", true, "Bosses");
-    settings.Add("abilities", true, "Abilities");
-    settings.Add("weapons", true, "Weapons");
-    settings.Add("rooms", true, "Rooms");
-
-    settings.Add("shops", true, "Shops/Teleporters");
 
     // Bosses
 
@@ -178,10 +175,10 @@ startup
     print("Loaded " + bossSplits.Count + " bosses");
     vars.bossSplits = new List<uint>();
 
-    settings.CurrentDefaultParent = "bosses";
+    settings.Add("bosses", true, "Bosses");
     foreach (var boss in bossSplits)
     {
-        settings.Add("B_" + boss.Key, false, boss.Value);
+        settings.Add("B_" + boss.Key, false, boss.Value, "bosses");
     }
 
     // Abilities
@@ -196,10 +193,10 @@ startup
     print("Loaded " + abilitySplits.Count + " abilities");
     vars.abilitySplits = new List<uint>();
 
-    settings.CurrentDefaultParent = "abilities";
+    settings.Add("abilities", true, "Abilities");
     foreach (var ability in abilitySplits)
     {
-        settings.Add("A_" + ability.Key, false, ability.Value);
+        settings.Add("A_" + ability.Key, false, ability.Value, "abilities");
     }
 
     // Weapons
@@ -219,10 +216,10 @@ startup
     print("Loaded " + weaponSplits.Count + " weapons");
     vars.weaponSplits = new List<uint>();
 
-    settings.CurrentDefaultParent = "weapons";
+    settings.Add("weapons", true, "Weapons");
     foreach (var weapon in weaponSplits)
     {
-        settings.Add("W_" + weapon.Key, false, weapon.Value);
+        settings.Add("W_" + weapon.Key, false, weapon.Value, "weapons");
     }
 
     // Rooms
@@ -247,39 +244,48 @@ startup
     print("Loaded " + roomSplits.Count + " rooms");
     vars.roomSplits = new List<uint>();
 
-    settings.CurrentDefaultParent = "rooms";
+    settings.Add("rooms", true, "Rooms");
     foreach (var room in roomSplits)
     {
-        settings.Add("R_" + room.Key, false, room.Value);
+        settings.Add("R_" + room.Key, false, room.Value, "rooms");
     }
 
-    // temp
+    // Warps
 
+    var warpSplits = new Dictionary<uint, string>()
+    {
+        { 0xAA597EF5, "Crown of Towers teleporter" },
+        { 0x4D00F471, "Sacred Entombments teleporter" },
+        { 0xF8126195, "Elevated Temples teleporter" },
+    };
+    print("Loaded " + warpSplits.Count + " warps");
+    vars.warpSplits = new List<uint>();
 
-    vars.shopsUsed = new List<uint>();
+    settings.Add("warps", true, "Warps");
+    foreach (var warp in warpSplits)
+    {
+        settings.Add("W_" + warp.Key, false, warp.Value, "warps");
+    }
 
-    
-    
-    
+    // Shops
 
     var shopSplits = new Dictionary<uint, string>()
     {
-        { 0xAA597EF5, "Crown of Towers teleporter"},
-        { 0x4D00F471, "Sacred Entombments teleporter"},
-        { 0xF8126195, "Elevated Temples Teleporter"},
-        { 0x81D8A9E6, "City shop"},
-        { 0x81D8A9E5, "The Sculptor"},
-        { 0x81D8A9E4, "The Confessor"},
-        { 0x5DD4E43B, "Forlorn Patio shop"},
+        { 0x81D8A9E6, "City shop" },
+        { 0x81D8A9E5, "The Sculptor" },
+        { 0x81D8A9E4, "The Confessor" },
+        { 0x5DD4E43B, "Forlorn Patio shop" },
     };
-    print("Loaded " + shopSplits.Count + " shops/teleporters");
+    print("Loaded " + shopSplits.Count + " shops");
+    vars.shopSplits = new List<uint>();
 
-    //add shops settings
-    settings.CurrentDefaultParent = "shops";
+    settings.Add("shops", true, "Shops");
     foreach (var shop in shopSplits)
     {
-        settings.Add("T_" + shop.Key, false, shop.Value);
+        settings.Add("S_" + shop.Key, false, shop.Value, "shops");
     }
+
+
 
     // Change timing method to game time (Not my own, taken from another autosplitter)
     if (timer.CurrentTimingMethod == TimingMethod.GameTime)
