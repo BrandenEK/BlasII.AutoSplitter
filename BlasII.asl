@@ -122,7 +122,7 @@ split
 
     // Warps
 
-    if (settings["W_" + current.mainRoom] && current.isInputLocked && !vars.warpSplits.Contains(current.mainRoom))
+    if (settings["T_" + current.mainRoom] && current.earlyRoom == old.lateRoom && current.isInputLocked && !vars.warpSplits.Contains(current.mainRoom))
     {
         vars.warpSplits.Add(current.mainRoom);
         return true;
@@ -264,7 +264,7 @@ startup
     settings.Add("warps", true, "Warps");
     foreach (var warp in warpSplits)
     {
-        settings.Add("W_" + warp.Key, false, warp.Value, "warps");
+        settings.Add("T_" + warp.Key, false, warp.Value, "warps");
     }
 
     // Shops
