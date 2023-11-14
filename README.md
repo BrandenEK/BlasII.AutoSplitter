@@ -29,7 +29,7 @@ Add Ox20 to the last offset of bossHealth.
 ### lesmesHealth
 Add Ox40 to the last offset of bossHealth.
 
-### characterHealth
+### playerHealth
 Check TPO's Health on the pause menu and search for this value.
 
 ### isInputLocked
@@ -39,6 +39,6 @@ The value is 0 while the game is in focus and TPO can move normally, pause the g
 ### isItemPickUp
 Value is 1 while chest animation is playing, 0 is not picking up an item or ability.
 
-### characterPositionX
+### playerPositionX
 Make sure to search for float.
 City Prie Dieu coordinate is -130, going to the right increases it
