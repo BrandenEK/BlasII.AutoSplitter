@@ -18,5 +18,27 @@ Go back and forth between some of these known room values. It should be the firs
 ### lateRoom
 First find the main room hash.  There should be five consistent addresses, this one will be locked when using a ladder to change scenes.
 
-### enemyCount
-Start in Profundo Lamento to narrow it down to about fifteen enemy counts.  Then enter the Chiseled One boss fight.  It should be 0 at first, and should only change to 1 once his wheel hits the ground.  There will be two addresses, use the second one.
+### bossHealth
+Go to The Faceless One (tutorial boss), value should be 500 and decreasing with each hit.
+There will be 3 adresses find the 2 with the lowest value and keep the one that resets to 0 upon quitting to main menu
+Pointers are quite long, find 6-7 offsets long pointers with the right base adress then search for longer pointers by fixing the last 4/5 offests so it's fast enough.
+
+### infantaHealth
+Add Ox20 to the last offset of bossHealth.
+
+### lesmesHealth
+Add Ox40 to the last offset of bossHealth.
+
+### playerHealth
+Check TPO's Health on the pause menu and search for this value.
+
+### isInputLocked
+Bind cheat engine pause process shortcut.
+The value is 0 while the game is in focus and TPO can move normally, pause the game before launching scan, unpause click off blasphemous 2 and the value should be 1.
+
+### isItemPickUp
+Value is 1 while chest animation is playing, 0 is not picking up an item or ability.
+
+### playerPositionX
+Make sure to search for float.
+City Prie Dieu coordinate is -130, going to the right increases it
