@@ -49,6 +49,7 @@ split
         if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
         {
             print("Splitting on boss: " + current.mainRoom);
+            vars.bossSplits.Add(current.mainRoom);
             return true;
         }
     }
