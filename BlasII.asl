@@ -26,6 +26,12 @@ state("Blasphemous 2", "1.1.0")
     int   enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
 }
 
+state("Blasphemous 2", "2.1.1")
+{
+    bool   isPlaying : "GameAssembly.dll", 0x39C4120, 0xB8, 0xF8, 0x30, 0x190;
+    uint    mainRoom : "GameAssembly.dll", 0x39C4120, 0xB8, 0x5C8, 0x30, 0x0;
+}
+
 start
 {
     return old.mainRoom == 0 && current.mainRoom != 0;
@@ -77,6 +83,7 @@ init
     {
         case 62201856:  version = "1.0.5";    break;
         case 62459904:  version = "1.1.0";    break;
+        case 69939200:  version = "2.1.1";    break;
         default:        version = "Unknown";  break;
     }
 }
