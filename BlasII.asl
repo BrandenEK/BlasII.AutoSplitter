@@ -42,16 +42,19 @@ onStart
 
 split
 {
-    if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
-    {
-        print("changing");
-        return true;
-    }
-    bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.enemyCount == 0 && old.enemyCount == 1 && settings["devotion"];
-    bool emery = current.mainRoom == 0x5DD4E45B && old.mainRoom != 0x5DD4E45B && settings["emery"];
-    bool afilaor = current.mainRoom == 0x5DD4E45B && current.earlyRoom == 0x5DD4E45B && current.enemyCount == 0 && old.enemyCount == 1 && settings["afilaor"];
+    // Bosses
 
-    return devotion || emery || afilaor;
+    if (settings["B_" + current.mainRoom] && !vars.bossSplits.Contains(current.mainRoom))
+    {
+        if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
+        {
+            print("Splitting on boss: " + current.mainRoom);
+            return true;
+        }
+    }
+    bool emery = current.mainRoom == 0x5DD4E45B && old.mainRoom != 0x5DD4E45B && settings["emery"];
+
+    return false;
 }
 
 isLoading
