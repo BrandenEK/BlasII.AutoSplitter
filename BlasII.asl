@@ -28,7 +28,10 @@ state("Blasphemous 2", "1.1.0")
 
 start
 {
-    return old.mainRoom == 0 && current.mainRoom != 0;
+    // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
+    uint oldRoom = (uint)(settings["wstart"] ? 0x4D00F498 : 0);
+
+    return old.mainRoom == oldRoom && current.mainRoom != oldRoom;
 }
 
 split
@@ -47,6 +50,8 @@ isLoading
 
 startup
 {
+    settings.Add("wstart", true, "Start timer on Weapon Select room");
+
     settings.Add("full", true, "Any% Ending");
     settings.Add("devotion", false, "Defeat Devotion Incarnate", "full");
     
