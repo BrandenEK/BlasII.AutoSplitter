@@ -17,6 +17,12 @@ state("Blasphemous 2", "1.0.5")
     int   enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
 }
 
+state("Blasphemous 2", "1.0.5 (Modded)")
+{
+    bool   isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0, 0x30, 0x190;
+    uint    mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28, 0x0;
+}
+
 state("Blasphemous 2", "1.1.0")
 {
     bool   isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0, 0x30, 0x190;
@@ -26,7 +32,19 @@ state("Blasphemous 2", "1.1.0")
     int   enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
 }
 
+state("Blasphemous 2", "1.1.0 (Modded)")
+{
+    bool   isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0, 0x30, 0x190;
+    uint    mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28, 0x0;
+}
+
 state("Blasphemous 2", "2.1.1")
+{
+    bool   isPlaying : "GameAssembly.dll", 0x39C4120, 0xB8, 0xF8, 0x30, 0x190;
+    uint    mainRoom : "GameAssembly.dll", 0x39C4120, 0xB8, 0x5C8, 0x30, 0x0;
+}
+
+state("Blasphemous 2", "2.1.1 (Modded)")
 {
     bool   isPlaying : "GameAssembly.dll", 0x39C4120, 0xB8, 0xF8, 0x30, 0x190;
     uint    mainRoom : "GameAssembly.dll", 0x39C4120, 0xB8, 0x5C8, 0x30, 0x0;
@@ -77,7 +95,10 @@ startup
 init
 {   
     int size = modules.First(x => x.ModuleName == "GameAssembly.dll").ModuleMemorySize;
+    bool modded = modules.Any(x => x.ModuleName == "dobby.dll");
+
     print("BlasII module size: " + size);
+    print("BlasII dobby present: " + modded);
     
     switch (size)
     {
@@ -86,4 +107,7 @@ init
         case 69939200:  version = "2.1.1";    break;
         default:        version = "Unknown";  break;
     }
+	
+    if (modded)
+        version += " (Modded)";
 }
