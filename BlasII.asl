@@ -31,6 +31,12 @@ start
     return old.mainRoom == 0 && current.mainRoom != 0;
 }
 
+onStart
+{
+    print("Resetting cleared splits");
+    vars.bossSplits.Clear();
+}
+
 split
 {
     bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.enemyCount == 0 && old.enemyCount == 1 && settings["devotion"];
@@ -47,6 +53,31 @@ isLoading
 
 startup
 {
+    // Bosses
+
+    var bossSettings = new Dictionary<uint, string>()
+    {
+        { 0x4D00F491, "Faceless One" },
+        { 0x07B20B3D, "Radames" },
+        { 0xAA597F36, "Orospina" },
+        { 0x07B20A5A, "Lesmes" },
+        { 0x5DD4E45B, "Afilaor" },
+        { 0xF8126136, "Benedicta" },
+        { 0xF8126154, "Odon" },
+        { 0x556AEC39, "Sinodo" },
+        { 0x556AEC59, "Svsona" },
+        //{ 0x9AB9D533, "Eviterno" },
+        { 0x9AB9D532, "Devotion Incarnate" }
+    };
+    print("Loaded " + bossSettings.Count + " bosses");
+    vars.bossSplits = new List<uint>();
+
+    settings.Add("bosses", true, "Bosses");
+    foreach (var boss in bossSettings)
+    {
+        settings.Add("B_" + boss.Key, false, boss.Value, "bosses");
+    }
+
     settings.Add("full", true, "Any% Ending");
     settings.Add("devotion", false, "Defeat Devotion Incarnate", "full");
     
