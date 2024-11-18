@@ -38,6 +38,7 @@ onStart
 {
     print("Resetting cleared splits");
     vars.bossSplits.Clear();
+    vars.roomSplits.Clear();
 }
 
 split
@@ -53,7 +54,18 @@ split
             return true;
         }
     }
-    bool emery = current.mainRoom == 0x5DD4E45B && old.mainRoom != 0x5DD4E45B && settings["emery"];
+
+    // Rooms
+
+    if (current.mainRoom != old.mainRoom)
+    {
+        if (settings["R_" + current.mainRoom] && !vars.roomSplits.Contains(current.mainRoom))
+        {
+            print("Splitting on room: " + current.mainRoom);
+            vars.roomSplits.Add(current.mainRoom);
+            return true;
+        }
+    }
 
     return false;
 }
@@ -88,6 +100,31 @@ startup
     foreach (var boss in bossSettings)
     {
         settings.Add("B_" + boss.Key, false, boss.Value, "bosses");
+    }
+
+    // Rooms
+
+    var roomSettings = new Dictionary<uint, string>()
+    {
+        { 0x4D00F491, "Faceless One room" },
+        { 0x07B20B3D, "Radames room" },
+        { 0xAA597F36, "Orospina room" },
+        { 0x07B20A5A, "Lesmes room" },
+        { 0x5DD4E45B, "Afilaor room" },
+        { 0xF8126136, "Benedicta room" },
+        { 0xF8126154, "Odon room" },
+        { 0x556AEC39, "Sinodo room" },
+        { 0x556AEC59, "Svsona room" },
+        //{ 0x9AB9D533, "Eviterno room" },
+        { 0x9AB9D532, "Devotion Incarnate room" }
+    };
+    print("Loaded " + roomSettings.Count + " rooms");
+    vars.roomSplits = new List<uint>();
+
+    settings.Add("rooms", true, "Rooms");
+    foreach (var room in roomSettings)
+    {
+        settings.Add("R_" + room.Key, false, room.Value, "rooms");
     }
 
     settings.Add("full", true, "Any% Ending");
