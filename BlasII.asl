@@ -29,6 +29,12 @@ state("Blasphemous 2", "1.1.0")
     int   enemyCount : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x4F0, 0x1E8, 0x10;
 }
 
+state("Blasphemous 2", "2.1.1")
+{
+    bool   isPlaying : "GameAssembly.dll", 0x39C4120, 0xB8, 0xF8, 0x30, 0x190;
+    uint    mainRoom : "GameAssembly.dll", 0x39C4120, 0xB8, 0x5C8, 0x30, 0x0;
+}
+
 start
 {
     // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
@@ -152,12 +158,16 @@ startup
 init
 {   
     int size = modules.First(x => x.ModuleName == "GameAssembly.dll").ModuleMemorySize;
+    bool modded = modules.Any(x => x.ModuleName == "dobby.dll");
+
     print("BlasII module size: " + size);
+    print("BlasII dobby present: " + modded);
     
     switch (size)
     {
         case 62201856:  version = "1.0.5";    break;
         case 62459904:  version = "1.1.0";    break;
+        case 69939200:  version = "2.1.1";    break;
         default:        version = "Unknown";  break;
     }
 }
