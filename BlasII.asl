@@ -45,9 +45,9 @@ split
 {
     // Bosses
 
-    if (settings["B_" + current.mainRoom] && !vars.bossSplits.Contains(current.mainRoom))
+    if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
     {
-        if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
+        if (settings["B_" + current.mainRoom] && !vars.bossSplits.Contains(current.mainRoom))
         {
             print("Splitting on boss: " + current.mainRoom);
             vars.bossSplits.Add(current.mainRoom);
@@ -57,7 +57,7 @@ split
 
     // Rooms
 
-    if (current.mainRoom != old.mainRoom)
+    if (old.mainRoom != current.mainRoom)
     {
         if (settings["R_" + current.mainRoom] && !vars.roomSplits.Contains(current.mainRoom))
         {
