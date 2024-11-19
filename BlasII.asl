@@ -126,13 +126,6 @@ startup
     {
         settings.Add("R_" + room.Key, false, room.Value, "rooms");
     }
-
-    settings.Add("full", true, "Any% Ending");
-    settings.Add("devotion", false, "Defeat Devotion Incarnate", "full");
-    
-    settings.Add("level", true, "Afilaor% Ending");
-    settings.Add("emery", false, "Reach Sentinel of the Emery", "level");
-    settings.Add("afilaor", false, "Defeat Afilaor", "level");
     
     // Change timing method to game time (Not my own, taken from another autosplitter)
     if (timer.CurrentTimingMethod == TimingMethod.GameTime)
