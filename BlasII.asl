@@ -15,6 +15,9 @@ state("Blasphemous 2", "1.0.5")
     uint    mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x538, 0x30, 0x0;
     uint    lateRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x3C8, 0x150, 0x70;
     int   enemyCount : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x4E8, 0x178, 0x80;
+    float bossDeath1 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x28;
+    float bossDeath2 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x2C;
+    float bossDeath3 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x30;
 }
 
 state("Blasphemous 2", "1.1.0")
@@ -34,13 +37,40 @@ start
     return old.mainRoom == oldRoom && current.mainRoom != oldRoom;
 }
 
+onStart
+{
+    print("Resetting cleared splits");
+    vars.bossSplits.Clear();
+    vars.roomSplits.Clear();
+}
+
 split
 {
-    bool devotion = current.mainRoom == 0x9AB9D532 && current.earlyRoom == 0x9AB9D533 && current.enemyCount == 0 && old.enemyCount == 1 && settings["devotion"];
-    bool emery = current.mainRoom == 0x5DD4E45B && old.mainRoom != 0x5DD4E45B && settings["emery"];
-    bool afilaor = current.mainRoom == 0x5DD4E45B && current.earlyRoom == 0x5DD4E45B && current.enemyCount == 0 && old.enemyCount == 1 && settings["afilaor"];
+    // Bosses
 
-    return devotion || emery || afilaor;
+    if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
+    {
+        if (settings["B_" + current.mainRoom] && !vars.bossSplits.Contains(current.mainRoom))
+        {
+            print("Splitting on boss: " + current.mainRoom);
+            vars.bossSplits.Add(current.mainRoom);
+            return true;
+        }
+    }
+
+    // Rooms
+
+    if (old.mainRoom != current.mainRoom)
+    {
+        if (settings["R_" + current.mainRoom] && !vars.roomSplits.Contains(current.mainRoom))
+        {
+            print("Splitting on room: " + current.mainRoom);
+            vars.roomSplits.Add(current.mainRoom);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 isLoading
@@ -50,15 +80,60 @@ isLoading
 
 startup
 {
-    settings.Add("general", true, "General");
+    // General
+
+	settings.Add("general", true, "General");
     settings.Add("wstart", true, "Start timer on Weapon Select room", "general");
 
-    settings.Add("full", true, "Any% Ending");
-    settings.Add("devotion", false, "Defeat Devotion Incarnate", "full");
-    
-    settings.Add("level", true, "Afilaor% Ending");
-    settings.Add("emery", false, "Reach Sentinel of the Emery", "level");
-    settings.Add("afilaor", false, "Defeat Afilaor", "level");
+    // Bosses
+
+    var bossSettings = new Dictionary<uint, string>()
+    {
+        { 0x4D00F491, "Faceless One" },
+        { 0x07B20B3D, "Radames" },
+        { 0xAA597F36, "Orospina" },
+        { 0x07B20A5A, "Lesmes" },
+        { 0x5DD4E45B, "Afilaor" },
+        { 0xF8126136, "Benedicta" },
+        { 0xF8126154, "Odon" },
+        { 0x556AEC39, "Sinodo" },
+        { 0x556AEC59, "Svsona" },
+        //{ 0x9AB9D533, "Eviterno" },
+        { 0x9AB9D532, "Devotion Incarnate" }
+    };
+    print("Loaded " + bossSettings.Count + " bosses");
+    vars.bossSplits = new List<uint>();
+
+    settings.Add("bosses", true, "Bosses");
+    foreach (var boss in bossSettings)
+    {
+        settings.Add("B_" + boss.Key, false, boss.Value, "bosses");
+    }
+
+    // Rooms
+
+    var roomSettings = new Dictionary<uint, string>()
+    {
+        { 0x4D00F491, "Faceless One room" },
+        { 0x07B20B3D, "Radames room" },
+        { 0xAA597F36, "Orospina room" },
+        { 0x07B20A5A, "Lesmes room" },
+        { 0x5DD4E45B, "Afilaor room" },
+        { 0xF8126136, "Benedicta room" },
+        { 0xF8126154, "Odon room" },
+        { 0x556AEC39, "Sinodo room" },
+        { 0x556AEC59, "Svsona room" },
+        //{ 0x9AB9D533, "Eviterno room" },
+        { 0x9AB9D532, "Devotion Incarnate room" }
+    };
+    print("Loaded " + roomSettings.Count + " rooms");
+    vars.roomSplits = new List<uint>();
+
+    settings.Add("rooms", true, "Rooms");
+    foreach (var room in roomSettings)
+    {
+        settings.Add("R_" + room.Key, false, room.Value, "rooms");
+    }
     
     // Change timing method to game time (Not my own, taken from another autosplitter)
     if (timer.CurrentTimingMethod == TimingMethod.GameTime)
