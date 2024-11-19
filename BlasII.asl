@@ -82,7 +82,7 @@ startup
 {
     // General
 
-	settings.Add("general", true, "General");
+    settings.Add("general", true, "General");
     settings.Add("wstart", true, "Start timer on Weapon Select room", "general");
 
     // Bosses
