@@ -129,7 +129,7 @@ startup
         { 0xF8126154, "Odon room" },
         { 0x556AEC39, "Sinodo room" },
         { 0x556AEC59, "Svsona room" },
-        //{ 0x9AB9D533, "Eviterno room" },
+        { 0x9AB9D533, "Eviterno room" },
         { 0x9AB9D532, "Devotion Incarnate room" }
     };
     print("Loaded " + roomSettings.Count + " rooms");
