@@ -21,18 +21,18 @@ state("Blasphemous 2", "1.1.0")
 {
     bool   isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0, 0x30, 0x190;
     uint    mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x250, 0x30, 0x0;
-    float bossDeath1 : 0;
-    float bossDeath2 : 0;
-    float bossDeath3 : 0;
+    float bossDeath1 : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x150, 0x28;
+    float bossDeath2 : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x150, 0x2C;
+    float bossDeath3 : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x150, 0x30;
 }
 
 state("Blasphemous 2", "2.1.1")
 {
     bool   isPlaying : "GameAssembly.dll", 0x39C4120, 0xB8, 0xF8, 0x30, 0x190;
     uint    mainRoom : "GameAssembly.dll", 0x39C4120, 0xB8, 0x5C8, 0x30, 0x0;
-    float bossDeath1 : 0;
-    float bossDeath2 : 0;
-    float bossDeath3 : 0;
+    float bossDeath1 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x180, 0x28;
+    float bossDeath2 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x180, 0x2C;
+    float bossDeath3 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x180, 0x30;
 }
 
 start
