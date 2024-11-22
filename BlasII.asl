@@ -95,19 +95,19 @@ startup
 
     var bossSettings = new Dictionary<uint, string>()
     {
-        { 0x4D00F491, "Faceless One" },
-        { 0x07B20B3D, "Radames" },
-        { 0xAA597F36, "Orospina" },
-        { 0x07B20A5A, "Lesmes" },
-        { 0x5DD4E45B, "Afilaor" },
-        { 0xF8126136, "Benedicta" },
-        { 0xF8126154, "Odon" },
-        { 0x556AEC39, "Sinodo" },
-        { 0x556AEC59, "Svsona" },
-        //{ 0x9AB9D533, "Eviterno" },
-        { 0x9AB9D532, "Devotion Incarnate" },
+        { 0x4D00F491, "Faceless One, Chisel of Oblivion" },
+        { 0x07B20B3D, "Great Preceptor Radamés" },
+        { 0xAA597F36, "Orospina, Lady Embroiderer" },
+        { 0x07B20A5A, "Lesmes & Infanta" },
+        { 0x5DD4E45B, "Afilaor, Sentinel of the Emery" },
+        { 0xF8126136, "Benedicta of the Endless Orison" },
+        { 0xF8126154, "Odón of the Confraternity of Salt" },
+        { 0x556AEC39, "Sínodo, Hymn of the Thousand Voices" },
+        { 0x556AEC59, "Svsona, Fermosa Fembra" },
+        //{ 0x9AB9D533, "Eviterno, First of the Penitents" },
+        { 0x9AB9D532, "Incarnate Devotion" },
         { 0x45CB41B1, "Sor Cautiva del Silencio" },
-        { 0xA323CD29, "Brother Asterion" }
+        { 0xA323CD29, "Brother Asterión" }
     };
     print("Loaded " + bossSettings.Count + " bosses");
     vars.bossSplits = new List<uint>();
