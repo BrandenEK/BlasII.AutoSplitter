@@ -105,7 +105,9 @@ startup
         { 0x556AEC39, "Sinodo" },
         { 0x556AEC59, "Svsona" },
         //{ 0x9AB9D533, "Eviterno" },
-        { 0x9AB9D532, "Devotion Incarnate" }
+        { 0x9AB9D532, "Devotion Incarnate" },
+        { 0x45CB41B1, "Sor Cautiva del Silencio" },
+        { 0xA323CD29, "Brother Asterion" }
     };
     print("Loaded " + bossSettings.Count + " bosses");
     vars.bossSplits = new List<uint>();
@@ -130,7 +132,9 @@ startup
         { 0x556AEC39, "Sinodo room" },
         { 0x556AEC59, "Svsona room" },
         { 0x9AB9D533, "Eviterno room" },
-        { 0x9AB9D532, "Devotion Incarnate room" }
+        { 0x9AB9D532, "Devotion Incarnate room" },
+        { 0x45CB41B1, "Sor room" },
+        { 0xA323CD29, "Asterion room" }
     };
     print("Loaded " + roomSettings.Count + " rooms");
     vars.roomSplits = new List<uint>();
