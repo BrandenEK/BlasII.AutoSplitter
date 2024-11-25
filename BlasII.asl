@@ -91,6 +91,37 @@ startup
     settings.Add("general", true, "General");
     settings.Add("wstart", true, "Start timer on Weapon Select room", "general");
 
+    var zoneNames = new Dictionary<string, string>()
+    {
+        { "Z01", "Repose of the Silent One" },
+        { "Z02", "Ravine of the High Stones" },
+        { "Z03", "Aqueduct of the Costales" },
+        { "Z04", "Sacred Entombments" },
+        { "Z05", "City of the Blessed Name" },
+        { "Z06", "Grilles and Ruins" },
+        { "Z07", "Palace of the Embroideries" },
+        { "Z08", "Choir of Thorns" },
+        { "Z09", "Crown of Towers" },
+        { "Z10", "Elevated Temples" },
+        { "Z11", "Basilica of Absent Faces" },
+        { "Z12", "Sunken Cathedral" },
+        { "Z13", "Two Moons" },
+        { "Z14", "Mother of Mothers" },
+        { "Z15", "Dreams of Incense" },
+        { "Z16", "The Severed Tower" },
+        { "Z17", "Streets of Wakes" },
+        { "Z18", "Crimson Rains" },
+        { "Z19", "Profundo Lamento" },
+        { "Z20", "Sea of Ink" },
+        { "Z21", "Labyrinth of Tides" },
+        { "Z23", "Beneath Her Sacred Grounds" },
+        { "Z24", "Garden of the High Choirs" },
+        { "Z25", "Chapel of the Five Doves" },
+        { "Z26", "Forlorn Patio" },
+        { "Z27", "Icebound Mausoleum" },
+        { "Z28", "Santa Vigilia" }
+    };
+
     // Bosses
 
     var bossSettings = new Dictionary<uint, string>()
@@ -122,27 +153,73 @@ startup
 
     var roomSettings = new Dictionary<uint, string>()
     {
-        { 0x4D00F491, "Faceless One room" },
-        { 0x07B20B3D, "Radames room" },
-        { 0xAA597F36, "Orospina room" },
-        { 0x07B20A5A, "Lesmes room" },
-        { 0x5DD4E45B, "Afilaor room" },
-        { 0xF8126136, "Benedicta room" },
-        { 0xF8126154, "Odon room" },
-        { 0x556AEC39, "Sinodo room" },
-        { 0x556AEC59, "Svsona room" },
-        { 0x9AB9D533, "Eviterno room" },
-        { 0x9AB9D532, "Devotion Incarnate room" },
-        { 0x45CB41B1, "Sor room" },
-        { 0xA323CD29, "Asterion room" }
+        { 0x4D00F491, "Z01:Boss room" },
+        { 0x07B20B3D, "Z04:Boss room" },
+        { 0x4D00F471, "Z04:Teleport room" },
+        { 0x07B20B3B, "Z04:Veredicto weapon room" },
+        { 0x81D8A9E4, "Z05:Confessor room" },
+        { 0x81D8A9E5, "Z05:Sculptor room" },
+        { 0x81D8A9E6, "Z05:Shop room" },
+        { 0x4D00F418, "Z05:Teleport room" },
+        { 0xAA597F36, "Z07:Boss room" },
+        { 0x4D00F3CA, "Z07:Sarmiento weapon room" },
+        { 0x07B20A94, "Z07:Teleport room" },
+        { 0xEFA8688A, "Z08:Sarmiento upgrade room" },
+        { 0xEFA86893, "Z08:Teleport room west" },
+        { 0x07B20ABA, "Z08:Teleport room center" },
+        { 0x07B20AB3, "Z08:Teleport room east" },
+        { 0x07B20A53, "Z09:Air dash room" },
+        { 0x07B20A5A, "Z09:Boss room" },
+        { 0x07B20A62, "Z09:Ruego upgrade room" },
+        { 0xEFA86829, "Z09:Ruego weapon room" },
+        { 0xAA597EF5, "Z09:Teleport room" },
+        { 0xE008BF66, "Z10:Sarmiento upgrade room" },
+        { 0xF8126195, "Z10:Teleport room" },
+        { 0xF8126191, "Z10:Veredicto upgrade room" },
+        { 0xF8126136, "Z11:Boss room" },
+        { 0xF8126154, "Z12:Boss room" },
+        { 0xF8126155, "Z12:Teleport room" },
+        { 0x9AB9D5EC, "Z12:Veredicto upgrade room" },
+        { 0x556AEC59, "Z13:Boss room" },
+        { 0x556AEC79, "Z14:Teleport room" },
+        { 0x9AB9D54C, "Z15:Dove room" },
+        { 0x556AEC39, "Z16:Boss room" },
+        { 0xF81260D5, "Z16:Cherub ring room" },
+        { 0xF81260D3, "Z16:Teleport room" },
+        { 0x9AB9D512, "Z17:Teleport room" },
+        { 0x9AB9D533, "Z18:Boss room (Eviterno)" },
+        { 0x9AB9D532, "Z18:Boss room (Devotion)" },
+        { 0x9AB9D526, "Z18:Teleport room" },
+        { 0xF8126038, "Z19:Wall climb room" },
+        { 0xE872B705, "Z21:Teleport room" },
+        { 0x5DD4E45B, "Z23:Boss room" },
+        { 0x5DD4E457, "Z23:Double jump room" },
+        { 0x007C58FA, "Z23:Ruego upgrade room" },
+        { 0x5DD4E462, "Z23:Teleport room" },
+        //{ 0x00, "Z25:Dove room" },
+        //{ 0x00, "Z26:Shop room" },
+        { 0x45CB41B1, "Z27:Boss room" },
+        { 0x007C587B, "Z27:Teleport room" },
+        { 0x5DD4E3F6, "Z28:Boss room (First)" },
+        { 0xA323CD29, "Z28:Boss room (Second)" },
+        { 0x5DD4E3F7, "Z28:Teleport room west" },
+        { 0xA323CD2C, "Z28:Teleport room east" }
     };
     print("Loaded " + roomSettings.Count + " rooms");
     vars.roomSplits = new List<uint>();
 
     settings.Add("rooms", true, "Rooms");
+    foreach (var zone in zoneNames)
+    {
+        settings.Add("R_" + zone.Key, true, zone.Value, "rooms");
+    }
+
     foreach (var room in roomSettings)
     {
-        settings.Add("R_" + room.Key, false, room.Value, "rooms");
+        string zone = room.Value.Substring(0, room.Value.IndexOf(':'));
+        string name = room.Value.Substring(room.Value.IndexOf(':') + 1);
+
+        settings.Add("R_" + room.Key, false, name, "R_" + zone);
     }
     
     // Change timing method to game time (Not my own, taken from another autosplitter)
