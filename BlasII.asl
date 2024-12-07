@@ -54,10 +54,12 @@ start
     uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
     uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
 
-    // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
-    uint splitRoom = (uint)(settings["wstart"] ? 0x4D00F498 : 0);
-
-    return oldRoom == splitRoom && currentRoom != splitRoom;
+    if (oldRoom == currentRoom)
+        return false;
+    
+    return settings["time_file"] && currentRoom == 0x4D00F498
+        || settings["time_weapon"] && currentRoom == 0x9AB9D550
+        || settings["time_penitence"] && currentRoom == 0x4D00F495;
 }
 
 onStart
