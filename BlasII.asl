@@ -2,7 +2,8 @@
 state("Blasphemous 2", "Unknown")
 {
     bool   isPlaying : 0;
-    uint    mainRoom : 0;
+    uint   mainRoom1 : 0;
+    uint   mainRoom2 : 0;
     float bossDeath1 : 0;
     float bossDeath2 : 0;
     float bossDeath3 : 0;
@@ -11,7 +12,8 @@ state("Blasphemous 2", "Unknown")
 state("Blasphemous 2", "1.0.5")
 {
     bool   isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0, 0x30, 0x190;
-    uint    mainRoom : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x538, 0x30, 0x0;
+    uint   mainRoom1 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28, 0x0;
+    uint   mainRoom2 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x538, 0x30, 0x0;
     float bossDeath1 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x28;
     float bossDeath2 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x2C;
     float bossDeath3 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x30;
@@ -20,7 +22,8 @@ state("Blasphemous 2", "1.0.5")
 state("Blasphemous 2", "1.1.0")
 {
     bool   isPlaying : "GameAssembly.dll", 0x33A63D8, 0xB8, 0xE0, 0x30, 0x190;
-    uint    mainRoom : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x3C0, 0x250, 0x30, 0x0;
+    uint   mainRoom1 : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x2C8, 0x28, 0x0;
+    uint   mainRoom2 : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x540, 0x30, 0x0;
     float bossDeath1 : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x150, 0x28;
     float bossDeath2 : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x150, 0x2C;
     float bossDeath3 : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x150, 0x30;
@@ -29,7 +32,8 @@ state("Blasphemous 2", "1.1.0")
 state("Blasphemous 2", "2.1.1")
 {
     bool   isPlaying : "GameAssembly.dll", 0x39C4120, 0xB8, 0xF8, 0x30, 0x190;
-    uint    mainRoom : "GameAssembly.dll", 0x39C4120, 0xB8, 0x5C8, 0x30, 0x0;
+    uint   mainRoom1 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x340, 0x28, 0x0;
+    uint   mainRoom2 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x5C8, 0x30, 0x0;
     float bossDeath1 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x180, 0x28;
     float bossDeath2 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x180, 0x2C;
     float bossDeath3 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x180, 0x30;
@@ -37,10 +41,13 @@ state("Blasphemous 2", "2.1.1")
 
 start
 {
-    // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
-    uint oldRoom = (uint)(settings["wstart"] ? 0x4D00F498 : 0);
+    uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
+    uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
 
-    return old.mainRoom == oldRoom && current.mainRoom != oldRoom;
+    // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
+    uint splitRoom = (uint)(settings["wstart"] ? 0x4D00F498 : 0);
+
+    return oldRoom == splitRoom && currentRoom != splitRoom;
 }
 
 onStart
@@ -52,26 +59,29 @@ onStart
 
 split
 {
+    uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
+    uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
+
     // Bosses
 
     if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
     {
-        if (settings["B_" + current.mainRoom] && !vars.bossSplits.Contains(current.mainRoom))
+        if (settings["B_" + currentRoom] && !vars.bossSplits.Contains(currentRoom))
         {
-            print("Splitting on boss: " + current.mainRoom);
-            vars.bossSplits.Add(current.mainRoom);
+            print("Splitting on boss: " + currentRoom);
+            vars.bossSplits.Add(currentRoom);
             return true;
         }
     }
 
     // Rooms
 
-    if (old.mainRoom != current.mainRoom)
+    if (oldRoom != currentRoom)
     {
-        if (settings["R_" + current.mainRoom] && !vars.roomSplits.Contains(current.mainRoom))
+        if (settings["R_" + currentRoom] && !vars.roomSplits.Contains(currentRoom))
         {
-            print("Splitting on room: " + current.mainRoom);
-            vars.roomSplits.Add(current.mainRoom);
+            print("Splitting on room: " + currentRoom);
+            vars.roomSplits.Add(currentRoom);
             return true;
         }
     }
@@ -81,7 +91,10 @@ split
 
 isLoading
 {
-    return !current.isPlaying || current.mainRoom == 0;
+    uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
+    uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
+
+    return !current.isPlaying || currentRoom == 0;
 }
 
 startup
