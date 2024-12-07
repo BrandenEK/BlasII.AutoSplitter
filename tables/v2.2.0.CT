@@ -4,8 +4,9 @@
     <CheatEntry>
       <ID>14</ID>
       <Description>"isPlaying"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
       <VariableType>4 Bytes</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039F3C38</Address>
       <Offsets>
         <Offset>190</Offset>
         <Offset>30</Offset>
@@ -46,7 +47,7 @@
       <Description>"bossDeath1"</Description>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039F3C38</Address>
       <Offsets>
         <Offset>28</Offset>
         <Offset>180</Offset>
@@ -58,7 +59,7 @@
       <Description>"bossDeath2"</Description>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039F3C38</Address>
       <Offsets>
         <Offset>2C</Offset>
         <Offset>180</Offset>
@@ -70,7 +71,7 @@
       <Description>"bossDeath3"</Description>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039F3C38</Address>
       <Offsets>
         <Offset>30</Offset>
         <Offset>180</Offset>
