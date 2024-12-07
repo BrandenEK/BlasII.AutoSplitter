@@ -15,7 +15,21 @@
     </CheatEntry>
     <CheatEntry>
       <ID>83</ID>
-      <Description>"mainRoom"</Description>
+      <Description>"mainRoom1"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"GameAssembly.dll"+0336A6F0</Address>
+      <Offsets>
+        <Offset>0</Offset>
+        <Offset>28</Offset>
+        <Offset>2D0</Offset>
+        <Offset>B8</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>120</ID>
+      <Description>"mainRoom2"</Description>
       <ShowAsHex>1</ShowAsHex>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>4 Bytes</VariableType>
