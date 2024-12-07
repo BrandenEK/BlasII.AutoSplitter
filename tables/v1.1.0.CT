@@ -4,7 +4,6 @@
     <CheatEntry>
       <ID>82</ID>
       <Description>"isPlaying"</Description>
-      <LastState Value="1" RealAddress="21C42E01B50"/>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>4 Bytes</VariableType>
       <Address>"GameAssembly.dll"+33A63D8</Address>
@@ -17,8 +16,21 @@
     </CheatEntry>
     <CheatEntry>
       <ID>121</ID>
-      <Description>"mainRoom"</Description>
-      <LastState Value="F8126154" RealAddress="21A21252170"/>
+      <Description>"mainRoom1"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"GameAssembly.dll"+033A63D8</Address>
+      <Offsets>
+        <Offset>0</Offset>
+        <Offset>28</Offset>
+        <Offset>2C8</Offset>
+        <Offset>B8</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>122</ID>
+      <Description>"mainRoom2"</Description>
       <ShowAsHex>1</ShowAsHex>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>4 Bytes</VariableType>
@@ -34,7 +46,6 @@
     <CheatEntry>
       <ID>117</ID>
       <Description>"bossDeath1"</Description>
-      <LastState Value="0.2039215863" RealAddress="21C42E6AB18"/>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
       <Address>"GameAssembly.dll"+033A63D8</Address>
@@ -47,7 +58,6 @@
     <CheatEntry>
       <ID>119</ID>
       <Description>"bossDeath2"</Description>
-      <LastState Value="0.2745098174" RealAddress="21C42E6AB1C"/>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
       <Address>"GameAssembly.dll"+033A63D8</Address>
@@ -60,7 +70,6 @@
     <CheatEntry>
       <ID>118</ID>
       <Description>"bossDeath3"</Description>
-      <LastState Value="0.3490196168" RealAddress="21C42E6AB20"/>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
       <Address>"GameAssembly.dll"+033A63D8</Address>
