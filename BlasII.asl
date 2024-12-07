@@ -111,8 +111,13 @@ startup
 {
     // General
 
-    settings.Add("general", true, "General");
-    settings.Add("wstart", true, "Start timer on Weapon Select room", "general");
+    //settings.Add("general", true, "General");
+
+    // Time start
+    settings.Add("time", true, "When to start timer");
+    settings.Add("time_file", false, "File select", "time");
+    settings.Add("time_weapon", true, "Weapon selection room", "time");
+    settings.Add("time_penitence", false, "Penitence selection room", "time");
 
     var zoneNames = new Dictionary<string, string>()
     {
