@@ -6,7 +6,7 @@
 Should be 1 while in game and on the menu, 0 while loading.  Prie Dieu animation is included in load.
 
 ### mainRoom
-Go back and forth between some of these known room values. It should be the second one.  Make sure it is not reset in Z1045
+Go back and forth between some of these known room values. It should be the first and second one.  One is zeroed in Z1045 and the other is zeroed in Z2501.
 - City: 0x4D00F414
 - Left: 0x4D00F4B1
 - Right: 0x4D00F411
