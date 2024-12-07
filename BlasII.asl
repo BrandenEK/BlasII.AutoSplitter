@@ -41,10 +41,13 @@ state("Blasphemous 2", "2.1.1")
 
 start
 {
-    // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
-    uint oldRoom = (uint)(settings["wstart"] ? 0x4D00F498 : 0);
+    uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
+    uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
 
-    return old.mainRoom == oldRoom && current.mainRoom != oldRoom;
+    // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
+    uint splitRoom = (uint)(settings["wstart"] ? 0x4D00F498 : 0);
+
+    return oldRoom == splitRoom && currentRoom != splitRoom;
 }
 
 onStart
@@ -56,26 +59,29 @@ onStart
 
 split
 {
+    uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
+    uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
+
     // Bosses
 
     if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
     {
-        if (settings["B_" + current.mainRoom] && !vars.bossSplits.Contains(current.mainRoom))
+        if (settings["B_" + currentRoom] && !vars.bossSplits.Contains(currentRoom))
         {
-            print("Splitting on boss: " + current.mainRoom);
-            vars.bossSplits.Add(current.mainRoom);
+            print("Splitting on boss: " + currentRoom);
+            vars.bossSplits.Add(currentRoom);
             return true;
         }
     }
 
     // Rooms
 
-    if (old.mainRoom != current.mainRoom)
+    if (oldRoom != currentRoom)
     {
-        if (settings["R_" + current.mainRoom] && !vars.roomSplits.Contains(current.mainRoom))
+        if (settings["R_" + currentRoom] && !vars.roomSplits.Contains(currentRoom))
         {
-            print("Splitting on room: " + current.mainRoom);
-            vars.roomSplits.Add(current.mainRoom);
+            print("Splitting on room: " + currentRoom);
+            vars.roomSplits.Add(currentRoom);
             return true;
         }
     }
@@ -85,7 +91,10 @@ split
 
 isLoading
 {
-    return !current.isPlaying || current.mainRoom == 0;
+    uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
+    uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
+
+    return !current.isPlaying || currentRoom == 0;
 }
 
 startup
