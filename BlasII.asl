@@ -39,6 +39,16 @@ state("Blasphemous 2", "2.1.1")
     float bossDeath3 : "GameAssembly.dll", 0x39C4120, 0xB8, 0x180, 0x30;
 }
 
+state("Blasphemous 2", "2.2.0")
+{
+    bool   isPlaying : "GameAssembly.dll", 0x039F3C38, 0xB8, 0xF8, 0x30, 0x190;
+    uint   mainRoom1 : "GameAssembly.dll", 0x039F3C38, 0xB8, 0x340, 0x28, 0x0;
+    uint   mainRoom2 : "GameAssembly.dll", 0x039F3C38, 0xB8, 0x5C8, 0x30, 0x0;
+    float bossDeath1 : "GameAssembly.dll", 0x039F3C38, 0xB8, 0x180, 0x28;
+    float bossDeath2 : "GameAssembly.dll", 0x039F3C38, 0xB8, 0x180, 0x2C;
+    float bossDeath3 : "GameAssembly.dll", 0x039F3C38, 0xB8, 0x180, 0x30;
+}
+
 start
 {
     uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
@@ -262,6 +272,7 @@ init
         case 62201856:  version = "1.0.5";    break;
         case 62459904:  version = "1.1.0";    break;
         case 69939200:  version = "2.1.1";    break;
+        case 70152192:  version = "2.2.0";    break;
         default:        version = "Unknown";  break;
     }
 }
