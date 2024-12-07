@@ -42,8 +42,8 @@ state("Blasphemous 2", "2.1.1")
 state("Blasphemous 2", "2.2.0")
 {
     bool   isPlaying : "GameAssembly.dll", 0;
-    uint   mainRoom1 : "GameAssembly.dll", 0;
-    uint   mainRoom2 : "GameAssembly.dll", 0;
+    uint   mainRoom1 : "GameAssembly.dll", 039F3C38, 0xB8, 0x340, 0x28, 0x0;
+    uint   mainRoom2 : "GameAssembly.dll", 039F3C38, 0xB8, 0x5C8, 0x30, 0x0;
     float bossDeath1 : "GameAssembly.dll", 0;
     float bossDeath2 : "GameAssembly.dll", 0;
     float bossDeath3 : "GameAssembly.dll", 0;
