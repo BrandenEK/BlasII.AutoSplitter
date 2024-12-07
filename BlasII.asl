@@ -54,10 +54,12 @@ start
     uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
     uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
 
-    // Menu - 0x00, Spawn - 0x4D00F498, Weapon - 0x9AB9D550
-    uint splitRoom = (uint)(settings["wstart"] ? 0x4D00F498 : 0);
-
-    return oldRoom == splitRoom && currentRoom != splitRoom;
+    if (oldRoom == currentRoom)
+        return false;
+    
+    return settings["time_file"] && currentRoom == 0x4D00F498
+        || settings["time_weapon"] && currentRoom == 0x9AB9D550
+        || settings["time_penitence"] && currentRoom == 0x4D00F495;
 }
 
 onStart
@@ -111,8 +113,13 @@ startup
 {
     // General
 
-    settings.Add("general", true, "General");
-    settings.Add("wstart", true, "Start timer on Weapon Select room", "general");
+    //settings.Add("general", true, "General");
+
+    // Time start
+    settings.Add("time", true, "When to start timer");
+    settings.Add("time_file", false, "File select", "time");
+    settings.Add("time_weapon", true, "Weapon selection room", "time");
+    settings.Add("time_penitence", false, "Penitence selection room", "time");
 
     var zoneNames = new Dictionary<string, string>()
     {
