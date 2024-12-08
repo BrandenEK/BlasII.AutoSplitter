@@ -2,7 +2,7 @@
 
 ## Variables needed per version:
 
-### isPlaying (A80)
+### isPlaying
 Should be 1 while in game and on the menu, 0 while loading.  Prie Dieu animation is included in load.
 
 ### mainRoom
@@ -18,3 +18,9 @@ After defeating certain bosses, a color will be set and preserved until the next
 - Radames: (0.063, 0.035, 0.071)
 - Orospina: (0.063, 0.047, 0.071)
 - Lesmes: (0.075, 0.082, 0.122)
+
+### inputBlocked
+Should be 1 while changing rooms, doing an interaction, or when game is not in focus.  You will need to set a hotkey in CE to search for 0.
+
+### position
+Use debug mod to search for the player's x position.  This value will only change in increments of 0.5 and will be preserved on the menu.  There should be two like this, take the first one.
