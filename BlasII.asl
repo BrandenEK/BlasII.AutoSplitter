@@ -167,7 +167,7 @@ startup
         { 0xF8126154, "Odón of the Confraternity of Salt" },
         { 0x556AEC39, "Sínodo, Hymn of the Thousand Voices" },
         { 0x556AEC59, "Svsona, Fermosa Fembra" },
-        //{ 0x9AB9D533, "Eviterno, First of the Penitents" },
+        { 0x9AB9D533, "Eviterno doesn't work yet, sorry :(" },
         { 0x9AB9D532, "Incarnate Devotion" },
         { 0x45CB41B1, "Sor Cautiva del Silencio" },
         { 0xA323CD29, "Brother Asterión" }
