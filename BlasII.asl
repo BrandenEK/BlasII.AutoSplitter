@@ -113,7 +113,7 @@ split
             if (!settings[x.Item1] || vars.positionSplits.Contains(x.Item1))
                 continue;
             
-            print("Checking x pos: " + x.Item2 + " - " + x.Item3);
+            print("Checking x pos: " + x.Item3 + " - " + x.Item4);
         }
     }
     
@@ -130,14 +130,34 @@ isLoading
 
 startup
 {    
-    // Time start
-    
+    // Add settings for time start
     settings.Add("time", true, "When to start timer");
     settings.Add("time_file", false, "File select", "time");
     settings.Add("time_weapon", true, "Enter weapon selection", "time");
     settings.Add("time_penitence1", false, "Enter penitence selection", "time");
     settings.Add("time_penitence2", false, "Exit penitence selection", "time");
     
+    // Store position info for autosplits
+    var positionInfo = new Tuple<string, string, float, float, float>[]
+    {
+        Tuple.Create("A_wallclimb", "Wall Climb", 7f, 11f, -48f),
+        Tuple.Create("A_doublejump", "Double Jump", -152f, -148f, -218f),
+        Tuple.Create("W_ruego", "Ruego Al Alba", 0f, 0f, 0f),
+    };
+    vars.positionInfo = positionInfo;
+    vars.positionSplits = new List<string>();
+
+    // Add ability settings
+    settings.Add("abilities", true, "Abilities");
+    foreach (var tuple in positionInfo.Where(x => x.Item1.StartsWith("A")))
+        settings.Add(tuple.Item1, false, tuple.Item2, "abilities");
+    
+    // Add weapon settings
+    settings.Add("weapons", true, "Weapons");
+    foreach (var tuple in positionInfo.Where(x => x.Item1.StartsWith("W")))
+        settings.Add(tuple.Item1, false, tuple.Item2, "weapons");
+    
+    // Dont use anymore ??
     var zoneNames = new Dictionary<string, string>()
     {
         { "Z01", "Repose of the Silent One" },
@@ -299,12 +319,4 @@ init
         case 70152192:  version = "2.2.0";    break;
         default:        version = "Unknown";  break;
     }
-    
-    // Store position info for autosplits
-    vars.positionSplits = new List<string>();
-    vars.positionInfo = new Tuple<string, float, float, float>[]
-    {
-        Tuple.Create("A_wallclimb", 7f, 11f, -48f),
-        Tuple.Create("A_doublejump", -152f, -148f, -218f),
-    };
 }
