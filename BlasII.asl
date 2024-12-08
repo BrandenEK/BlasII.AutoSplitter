@@ -144,7 +144,7 @@ startup
     settings.Add("time_penitence1", false, "Enter penitence selection", "time");
     settings.Add("time_penitence2", false, "Exit penitence selection", "time");
     
-    // Store position info for autosplits
+    // Store position info
     var positionInfo = new Tuple<string, string, float, float, float>[]
     {
         Tuple.Create("A_wallclimb", "Wall Climb", 7f, 11f, -48f),
@@ -153,18 +153,8 @@ startup
     };
     vars.positionInfo = positionInfo;
     vars.positionSplits = new List<string>();
-
-    // Add ability settings
-    settings.Add("abilities", true, "Abilities");
-    foreach (var tuple in positionInfo.Where(x => x.Item1.StartsWith("A")))
-        settings.Add(tuple.Item1, false, tuple.Item2, "abilities");
     
-    // Add weapon settings
-    settings.Add("weapons", true, "Weapons");
-    foreach (var tuple in positionInfo.Where(x => x.Item1.StartsWith("W")))
-        settings.Add(tuple.Item1, false, tuple.Item2, "weapons");
-    
-    // Dont use anymore ??
+    // Store zone info
     var zoneNames = new Dictionary<string, string>()
     {
         { "Z01", "Repose of the Silent One" },
@@ -196,9 +186,8 @@ startup
         { "Z28", "Santa Vigilia" }
     };
     
-    // Bosses
-    
-    var bossSettings = new Dictionary<uint, string>()
+    // Store boss info
+    var bossInfo = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Faceless One, Chisel of Oblivion" },
         { 0x07B20B3D, "Great Preceptor Radamés" },
@@ -214,18 +203,10 @@ startup
         { 0x45CB41B1, "Sor Cautiva del Silencio" },
         { 0xA323CD29, "Brother Asterión" }
     };
-    print("Loaded " + bossSettings.Count + " bosses");
+    print("Loaded " + bossInfo.Count + " bosses");
     vars.bossSplits = new List<uint>();
     
-    settings.Add("bosses", true, "Bosses");
-    foreach (var boss in bossSettings)
-    {
-        settings.Add("B_" + boss.Key, false, boss.Value, "bosses");
-    }
-    
-    // Rooms
-    
-    var roomSettings = new Dictionary<uint, string>()
+    var roomInfo = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Z01:Boss room" },
         { 0x07B20B3D, "Z04:Boss room" },
@@ -279,16 +260,30 @@ startup
         { 0x5DD4E3F7, "Z28:Teleport room west" },
         { 0xA323CD2C, "Z28:Teleport room east" }
     };
-    print("Loaded " + roomSettings.Count + " rooms");
+    print("Loaded " + roomInfo.Count + " rooms");
     vars.roomSplits = new List<uint>();
+
+    // Add ability settings
+    settings.Add("abilities", true, "Abilities");
+    foreach (var tuple in positionInfo.Where(x => x.Item1.StartsWith("A")))
+        settings.Add(tuple.Item1, false, tuple.Item2, "abilities");
     
+    // Add weapon settings
+    settings.Add("weapons", true, "Weapons");
+    foreach (var tuple in positionInfo.Where(x => x.Item1.StartsWith("W")))
+        settings.Add(tuple.Item1, false, tuple.Item2, "weapons");
+    
+    // Add boss settings
+    settings.Add("bosses", true, "Bosses");
+    foreach (var boss in bossInfo)
+        settings.Add("B_" + boss.Key, false, boss.Value, "bosses");
+    
+    // Add room settings
     settings.Add("rooms", true, "Rooms");
     foreach (var zone in zoneNames)
-    {
         settings.Add("R_" + zone.Key, true, zone.Value, "rooms");
-    }
     
-    foreach (var room in roomSettings)
+    foreach (var room in roomInfo)
     {
         string zone = room.Value.Substring(0, room.Value.IndexOf(':'));
         string name = room.Value.Substring(room.Value.IndexOf(':') + 1);
