@@ -106,14 +106,21 @@ split
         }
     }
     
+    // Input blocked positions
+    
     if (!old.inputBlocked && current.inputBlocked)
     {
-        foreach (var x in vars.positionInfo)
+        foreach (var tuple in vars.positionInfo)
         {
-            if (!settings[x.Item1] || vars.positionSplits.Contains(x.Item1))
+            if (!settings[tuple.Item1] || vars.positionSplits.Contains(tuple.Item1))
                 continue;
             
-            print("Checking x pos: " + x.Item3 + " - " + x.Item4);
+            if (current.positionX < tuple.Item3 || current.positionX > tuple.Item4 || current.positionY < tuple.Item5 - 0.5f || current.positionY > tuple.Item5 + 0.5f)
+                continue;
+            
+            print("Splitting on position: " + tuple.Item1);
+            vars.positionSplits.Add(tuple.Item1);
+            return true;
         }
     }
     
