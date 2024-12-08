@@ -118,8 +118,8 @@ startup
     // Time start
     settings.Add("time", true, "When to start timer");
     settings.Add("time_file", false, "File select", "time");
-    settings.Add("time_weapon", true, "Weapon selection room", "time");
-    settings.Add("time_penitence", false, "Penitence selection room", "time");
+    settings.Add("time_weapon", true, "Enter weapon selection", "time");
+    settings.Add("time_penitence", false, "Exit penitence selection", "time");
 
     var zoneNames = new Dictionary<string, string>()
     {
