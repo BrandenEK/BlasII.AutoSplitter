@@ -206,20 +206,20 @@ startup
     var roomInfo = new Tuple<uint, string, string>[]
     {
         // Boss rooms
-        Tuple.Create(0x4D00F491, "B", "Faceless One, Chisel of Oblivion"),
-        Tuple.Create(0x07B20B3D, "B", "Great Preceptor Radamés"),
-        Tuple.Create(0xAA597F36, "B", "Orospina, Lady Embroiderer"),
-        Tuple.Create(0x07B20A5A, "B", "Lesmes & Infanta"),
-        Tuple.Create(0x5DD4E45B, "B", "Afilaor, Sentinel of the Emery"),
-        Tuple.Create(0xF8126136, "B", "Benedicta of the Endless Orison"),
-        Tuple.Create(0xF8126154, "B", "Odón of the Confraternity of Salt"),
-        Tuple.Create(0x556AEC39, "B", "Sínodo, Hymn of the Thousand Voices"),
-        Tuple.Create(0x556AEC59, "B", "Svsona, Fermosa Fembra"),
-        Tuple.Create(0x9AB9D533, "B", "Eviterno, First of the Penitents"),
-        Tuple.Create(0x9AB9D532, "B", "Incarnate Devotion"),
-        Tuple.Create(0x45CB41B1, "B", "Sor Cautiva del Silencio"),
-        Tuple.Create(0x5DD4E3F6, "B", "Brother Asterión (First encounter)"),
-        Tuple.Create(0xA323CD29, "B", "Brother Asterión (Second encounter)"),
+        Tuple.Create<uint, string, string>(0x4D00F491, "B", "Faceless One, Chisel of Oblivion"),
+        Tuple.Create<uint, string, string>(0x07B20B3D, "B", "Great Preceptor Radamés"),
+        Tuple.Create<uint, string, string>(0xAA597F36, "B", "Orospina, Lady Embroiderer"),
+        Tuple.Create<uint, string, string>(0x07B20A5A, "B", "Lesmes & Infanta"),
+        Tuple.Create<uint, string, string>(0x5DD4E45B, "B", "Afilaor, Sentinel of the Emery"),
+        Tuple.Create<uint, string, string>(0xF8126136, "B", "Benedicta of the Endless Orison"),
+        Tuple.Create<uint, string, string>(0xF8126154, "B", "Odón of the Confraternity of Salt"),
+        Tuple.Create<uint, string, string>(0x556AEC39, "B", "Sínodo, Hymn of the Thousand Voices"),
+        Tuple.Create<uint, string, string>(0x556AEC59, "B", "Svsona, Fermosa Fembra"),
+        Tuple.Create<uint, string, string>(0x9AB9D533, "B", "Eviterno, First of the Penitents"),
+        Tuple.Create<uint, string, string>(0x9AB9D532, "B", "Incarnate Devotion"),
+        Tuple.Create<uint, string, string>(0x45CB41B1, "B", "Sor Cautiva del Silencio"),
+        Tuple.Create<uint, string, string>(0x5DD4E3F6, "B", "Brother Asterión (First encounter)"),
+        Tuple.Create<uint, string, string>(0xA323CD29, "B", "Brother Asterión (Second encounter)"),
     };
     print("Loaded " + roomInfo.Length + " rooms");
     vars.roomSplits = new List<uint>();
