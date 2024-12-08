@@ -157,7 +157,7 @@ startup
         Tuple.Create("W_censer1", "Veredicto", -705f, -695f, 152f),
         Tuple.Create("W_censer2", "Veredicto upgrade (Sunken Cathedral)", -433f, -428f, -30f),
         Tuple.Create("W_censer3", "Veredicto upgrade (Elevated Temples)", -73f, -68f, 192f),
-        Tuple.Create("W_rosary1", "Ruego Al Alba", 0f, 0f, 0f),
+        Tuple.Create("W_rosary1", "Ruego Al Alba", 775f, 785f, 122f),
         Tuple.Create("W_rosary2", "Ruego upgrade (Sacred Grounds)", -13f, -8f, -170f),
         Tuple.Create("W_rosary3", "Ruego upgrade (Crown of Towers)", 813f, 818f, 202f),
         Tuple.Create("W_rapier1", "Sarmiento & Centella", 595f, 605f, 0f),
