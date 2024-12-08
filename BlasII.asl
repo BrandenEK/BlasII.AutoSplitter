@@ -147,9 +147,24 @@ startup
     // Store position info
     var positionInfo = new Tuple<string, string, float, float, float>[]
     {
-        Tuple.Create("A_wallclimb", "Wall Climb", 7f, 11f, -48f),
-        Tuple.Create("A_doublejump", "Double Jump", -152f, -148f, -218f),
-        Tuple.Create("W_ruego", "Ruego Al Alba", 0f, 0f, 0f),
+        // Abilities
+        Tuple.Create("A_wallclimb", "Ivy of ascension", 7f, 11f, -48f),
+        Tuple.Create("A_doublejump", "Passage of Ash", -152f, -148f, -218f),
+        Tuple.Create("A_airdash", "Mercy of the Wind", 686f, 690f, 162f),
+        Tuple.Create("A_cherubrings", "Scions' Protection", -744f, -740f, 72f),
+        Tuple.Create("A_glasswalk", "Broken Step", 686f, 690f, 62f),
+        // Weapons
+        Tuple.Create("W_censer1", "Veredicto", -705f, -695f, 152f),
+        Tuple.Create("W_censer2", "Veredicto upgrade (Sunken Cathedral)", -433f, -428f, -30f),
+        Tuple.Create("W_censer3", "Veredicto upgrade (Elevated Temples)", -73f, -68f, 192f),
+        Tuple.Create("W_rosary1", "Ruego Al Alba", 0f, 0f, 0f),
+        Tuple.Create("W_rosary2", "Ruego upgrade (Sacred Grounds)", -13f, -8f, -170f),
+        Tuple.Create("W_rosary3", "Ruego upgrade (Crown of Towers)", 813f, 818f, 202f),
+        Tuple.Create("W_rapier1", "Sarmiento & Centella", 595f, 605f, 0f),
+        Tuple.Create("W_rapier2", "Sarmiento upgrade (Choir of Thorns)", 308f, 313f, 93f),
+        Tuple.Create("W_rapier3", "Sarmiento upgrade (Elevated Temples)", -32f, -28f, 272f),
+        //Tuple.Create("W_meaculpa1", "XXX", 0f, 0f, 0f),
+        Tuple.Create("W_meaculpa2", "Mea Culpa ugrade", -633f, -627f, 232f),
     };
     vars.positionInfo = positionInfo;
     vars.positionSplits = new List<string>();
