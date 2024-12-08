@@ -74,6 +74,7 @@ onStart
     print("Resetting cleared splits");
     vars.bossSplits.Clear();
     vars.roomSplits.Clear();
+    vars.positionSplits.Clear();
 }
 
 split
@@ -109,7 +110,7 @@ split
     {
         foreach (var x in vars.positionInfo)
         {
-            if (!settings[x.Item1]) // Check xSplits.Contains
+            if (!settings[x.Item1] || vars.positionSplits.Contains(x.Item1))
                 continue;
             
             print("Checking x pos: " + x.Item2 + " - " + x.Item3);
@@ -128,12 +129,9 @@ isLoading
 }
 
 startup
-{
-    // General
-    
-    //settings.Add("general", true, "General");
-    
+{    
     // Time start
+    
     settings.Add("time", true, "When to start timer");
     settings.Add("time_file", false, "File select", "time");
     settings.Add("time_weapon", true, "Enter weapon selection", "time");
@@ -303,8 +301,10 @@ init
     }
     
     // Store position info for autosplits
+    vars.positionSplits = new List<string>();
     vars.positionInfo = new Tuple<string, float, float, float>[]
     {
-        Tuple.Create("Wall Climb", 50.0f, 52.0f, 29.0f)
+        Tuple.Create("A_wallclimb", 7f, 11f, -48f),
+        Tuple.Create("A_doublejump", -152f, -148f, -218f),
     };
 }
