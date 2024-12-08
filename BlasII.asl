@@ -1,22 +1,28 @@
 
 state("Blasphemous 2", "Unknown")
 {
-    bool   isPlaying : 0;
-    uint   mainRoom1 : 0;
-    uint   mainRoom2 : 0;
-    float bossDeath1 : 0;
-    float bossDeath2 : 0;
-    float bossDeath3 : 0;
+    bool     isPlaying : 0;
+    uint     mainRoom1 : 0;
+    uint     mainRoom2 : 0;
+    float   bossDeath1 : 0;
+    float   bossDeath2 : 0;
+    float   bossDeath3 : 0;
+    bool  inputBlocked : 0;
+    float    positionX : 0;
+    float    positionY : 0;
 }
 
 state("Blasphemous 2", "1.0.5")
 {
-    bool   isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0, 0x30, 0x190;
-    uint   mainRoom1 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28, 0x0;
-    uint   mainRoom2 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x538, 0x30, 0x0;
-    float bossDeath1 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x28;
-    float bossDeath2 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x2C;
-    float bossDeath3 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x30;
+    bool     isPlaying : "GameAssembly.dll", 0x336A6F0, 0xB8, 0xE0, 0x30, 0x190;
+    uint     mainRoom1 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x2D0, 0x28, 0x0;
+    uint     mainRoom2 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x538, 0x30, 0x0;
+    float   bossDeath1 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x28;
+    float   bossDeath2 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x2C;
+    float   bossDeath3 : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x150, 0x30;
+    bool  inputBlocked : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x10, 0x78;
+    float    positionX : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x540, 0x60, 0x00;
+    float    positionY : "GameAssembly.dll", 0x336A6F0, 0xB8, 0x540, 0x60, 0x04;
 }
 
 state("Blasphemous 2", "1.1.0")
