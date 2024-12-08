@@ -59,7 +59,7 @@ start
 {
     uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
     uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
-
+    
     if (oldRoom == currentRoom)
         return false;
     
@@ -80,9 +80,9 @@ split
 {
     uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
     uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
-
+    
     // Bosses
-
+    
     if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
     {
         if (settings["B_" + currentRoom] && !vars.bossSplits.Contains(currentRoom))
@@ -92,9 +92,9 @@ split
             return true;
         }
     }
-
+    
     // Rooms
-
+    
     if (oldRoom != currentRoom)
     {
         if (settings["R_" + currentRoom] && !vars.roomSplits.Contains(currentRoom))
@@ -104,7 +104,7 @@ split
             return true;
         }
     }
-
+    
     if (!old.inputBlocked && current.inputBlocked)
     {
         foreach (var x in vars.positionInfo)
@@ -115,7 +115,7 @@ split
             print("Checking x pos: " + x.Item2 + " - " + x.Item3);
         }
     }
-
+    
     return false;
 }
 
@@ -123,23 +123,23 @@ isLoading
 {
     uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
     uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
-
+    
     return !current.isPlaying || currentRoom == 0;
 }
 
 startup
 {
     // General
-
+    
     //settings.Add("general", true, "General");
-
+    
     // Time start
     settings.Add("time", true, "When to start timer");
     settings.Add("time_file", false, "File select", "time");
     settings.Add("time_weapon", true, "Enter weapon selection", "time");
     settings.Add("time_penitence1", false, "Enter penitence selection", "time");
     settings.Add("time_penitence2", false, "Exit penitence selection", "time");
-
+    
     var zoneNames = new Dictionary<string, string>()
     {
         { "Z01", "Repose of the Silent One" },
@@ -170,9 +170,9 @@ startup
         { "Z27", "Icebound Mausoleum" },
         { "Z28", "Santa Vigilia" }
     };
-
+    
     // Bosses
-
+    
     var bossSettings = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Faceless One, Chisel of Oblivion" },
@@ -191,15 +191,15 @@ startup
     };
     print("Loaded " + bossSettings.Count + " bosses");
     vars.bossSplits = new List<uint>();
-
+    
     settings.Add("bosses", true, "Bosses");
     foreach (var boss in bossSettings)
     {
         settings.Add("B_" + boss.Key, false, boss.Value, "bosses");
     }
-
+    
     // Rooms
-
+    
     var roomSettings = new Dictionary<uint, string>()
     {
         { 0x4D00F491, "Z01:Boss room" },
@@ -256,13 +256,13 @@ startup
     };
     print("Loaded " + roomSettings.Count + " rooms");
     vars.roomSplits = new List<uint>();
-
+    
     settings.Add("rooms", true, "Rooms");
     foreach (var zone in zoneNames)
     {
         settings.Add("R_" + zone.Key, true, zone.Value, "rooms");
     }
-
+    
     foreach (var room in roomSettings)
     {
         string zone = room.Value.Substring(0, room.Value.IndexOf(':'));
@@ -289,7 +289,7 @@ init
 {   
     int size = modules.First(x => x.ModuleName == "GameAssembly.dll").ModuleMemorySize;
     bool modded = modules.Any(x => x.ModuleName == "dobby.dll");
-
+    
     print("BlasII module size: " + size);
     print("BlasII dobby present: " + modded);
     
