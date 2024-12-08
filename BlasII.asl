@@ -57,9 +57,10 @@ start
     if (oldRoom == currentRoom)
         return false;
     
-    return settings["time_file"] && currentRoom == 0x4D00F498
+    return settings["time_file"] && oldRoom == 0x00
         || settings["time_weapon"] && currentRoom == 0x9AB9D550
-        || settings["time_penitence"] && currentRoom == 0x4D00F495;
+        || settings["time_penitencex"] && currentRoom == 0xEFA86932
+        || settings["time_penitence"] && oldRoom == 0xEFA86932;
 }
 
 onStart
@@ -119,6 +120,7 @@ startup
     settings.Add("time", true, "When to start timer");
     settings.Add("time_file", false, "File select", "time");
     settings.Add("time_weapon", true, "Enter weapon selection", "time");
+    settings.Add("time_penitencex", false, "Enter penitence selection", "time");
     settings.Add("time_penitence", false, "Exit penitence selection", "time");
 
     var zoneNames = new Dictionary<string, string>()
