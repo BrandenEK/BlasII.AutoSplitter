@@ -81,13 +81,6 @@ split
     uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
     uint currentRoom = Math.Max(current.mainRoom1, current.mainRoom2);
 
-    if (current.enemyCount != old.enemyCount)
-        print("Enemy different");
-    if (!old.inputBlocked && current.inputBlocked)
-        print("Input different");
-    if (current.enemyCount != old.enemyCount && !old.inputBlocked && current.inputBlocked)
-        print("Enemy and input same time");
-
     // Bosses
 
     if (old.bossDeath1 != current.bossDeath1 || old.bossDeath2 != current.bossDeath2 || old.bossDeath3 != current.bossDeath3)
@@ -109,6 +102,17 @@ split
             print("Splitting on room: " + currentRoom);
             vars.roomSplits.Add(currentRoom);
             return true;
+        }
+    }
+
+    if (!old.inputBlocked && current.inputBlocked)
+    {
+        foreach (var x in vars.positionInfo)
+        {
+            if (!settings[x.Item1]) // Check xSplits.Contains
+                continue;
+            
+            print("Checking x pos: " + x.Item2 + " - " + x.Item3);
         }
     }
 
@@ -297,4 +301,10 @@ init
         case 70152192:  version = "2.2.0";    break;
         default:        version = "Unknown";  break;
     }
+    
+    // Store position info for autosplits
+    vars.positionInfo = new Tuple<string, float, float, float>[]
+    {
+        Tuple.Create("Wall Climb", 50.0f, 52.0f, 29.0f)
+    };
 }
