@@ -182,7 +182,12 @@ startup
         { "Z25", "Chapel of the Five Doves" },
         { "Z26", "Forlorn Patio" },
         { "Z27", "Icebound Mausoleum" },
-        { "Z28", "Santa Vigilia" }
+        { "Z28", "Santa Vigilia" },
+        { "Z29", "Usurped Halls" },
+        { "Z30", "Geometry of Knowledge" },
+        { "Z31", "Stone Entrails" },
+        { "Z32", "The Vibrating of the Organs" },
+        { "Z36", "Castle of Mist" }
     };
     
     // Store position info
