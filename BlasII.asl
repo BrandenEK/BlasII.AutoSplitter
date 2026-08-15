@@ -210,7 +210,10 @@ startup
         Tuple.Create("W_rapier2", "Sarmiento upgrade (Choir of Thorns)", 308f, 313f, 93f),
         Tuple.Create("W_rapier3", "Sarmiento upgrade (Elevated Temples)", -32f, -28f, 272f),
         //Tuple.Create("W_meaculpa1", "XXX", 0f, 0f, 0f),
-        Tuple.Create("W_meaculpa2", "Mea Culpa ugrade", -633f, -627f, 232f),
+        //Tuple.Create("W_meaculpa2", "Mea Culpa upgrade", -633f, -627f, 232f),
+        // Whip 1
+        // Whip 2
+        
     };
     print("Loaded " + positionInfo.Length + " positions");
     vars.positionInfo = positionInfo;
@@ -234,6 +237,7 @@ startup
         Tuple.Create<uint, string, string>(0x45CB41B1, "B", "Sor Cautiva del Silencio"),
         Tuple.Create<uint, string, string>(0x5DD4E3F6, "B", "Brother Asterión (First encounter)"),
         Tuple.Create<uint, string, string>(0xA323CD29, "B", "Brother Asterión (Second encounter)"),
+        // Crescensia room
     };
     print("Loaded " + roomInfo.Length + " rooms");
     vars.roomSplits = new List<uint>();
@@ -254,6 +258,7 @@ startup
         { 0x9AB9D532, "Incarnate Devotion" },
         { 0x45CB41B1, "Sor Cautiva del Silencio" },
         { 0xA323CD29, "Brother Asterión" }
+        // Crescensia boss
     };
     print("Loaded " + bossInfo.Count + " bosses");
     vars.bossSplits = new List<uint>();
