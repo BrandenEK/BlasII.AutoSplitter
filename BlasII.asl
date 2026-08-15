@@ -64,6 +64,19 @@ state("Blasphemous 2", "2.2.0")
     float    positionY : "GameAssembly.dll", 0x039F3C38, 0xB8, 0x5D0, 0x60, 0x04;
 }
 
+state("Blasphemous 2", "3.0.1")
+{
+    bool     isPlaying : 0;
+    uint     mainRoom1 : 0;
+    uint     mainRoom2 : 0;
+    float   bossDeath1 : 0;
+    float   bossDeath2 : 0;
+    float   bossDeath3 : 0;
+    bool  inputBlocked : 0;
+    float    positionX : 0;
+    float    positionY : 0;
+}
+
 start
 {
     uint oldRoom = Math.Max(old.mainRoom1, old.mainRoom2);
