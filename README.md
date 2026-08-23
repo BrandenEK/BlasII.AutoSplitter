@@ -1,5 +1,7 @@
 # Development notes
 
+Use WpfTraceSpy to determine the module size.  Then use Cheat Engine to determine the main variables.
+
 ## Variables needed per version:
 
 ### isPlaying
