@@ -213,7 +213,7 @@ startup
         { "Z30", "Geometry of Knowledge" },
         { "Z31", "Stone Entrails" },
         { "Z32", "The Vibrating of the Organs" },
-        { "Z36", "Castle of Mist" }
+        { "Z36", "Castle of Mist" },
     };
     
     // Store position info
@@ -285,7 +285,6 @@ startup
         { 0x45CB41B1, "Sor Cautiva del Silencio" },
         { 0xA323CD29, "Brother Asterión" },
         { 0xAB8DC5F6, "Crescencia, Duchess of the Sleeping Visage" },
-        // Crescensia boss
     };
     print("Loaded " + bossInfo.Count + " bosses");
     vars.bossSplits = new List<uint>();
