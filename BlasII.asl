@@ -208,7 +208,12 @@ startup
         { "Z25", "Chapel of the Five Doves" },
         { "Z26", "Forlorn Patio" },
         { "Z27", "Icebound Mausoleum" },
-        { "Z28", "Santa Vigilia" }
+        { "Z28", "Santa Vigilia" },
+        { "Z29", "Usurped Halls" },
+        { "Z30", "Geometry of Knowledge" },
+        { "Z31", "Stone Entrails" },
+        { "Z32", "The Vibrating of the Organs" },
+        { "Z36", "Castle of Mist" }
     };
     
     // Store position info
@@ -231,7 +236,10 @@ startup
         Tuple.Create("W_rapier2", "Sarmiento upgrade (Choir of Thorns)", 308f, 313f, 93f),
         Tuple.Create("W_rapier3", "Sarmiento upgrade (Elevated Temples)", -32f, -28f, 272f),
         //Tuple.Create("W_meaculpa1", "XXX", 0f, 0f, 0f),
-        Tuple.Create("W_meaculpa2", "Mea Culpa ugrade", -633f, -627f, 232f),
+        //Tuple.Create("W_meaculpa2", "Mea Culpa upgrade", -633f, -627f, 232f),
+        // Whip 1
+        // Whip 2
+        
     };
     print("Loaded " + positionInfo.Length + " positions");
     vars.positionInfo = positionInfo;
@@ -255,6 +263,7 @@ startup
         Tuple.Create<uint, string, string>(0x45CB41B1, "B", "Sor Cautiva del Silencio"),
         Tuple.Create<uint, string, string>(0x5DD4E3F6, "B", "Brother Asterión (First encounter)"),
         Tuple.Create<uint, string, string>(0xA323CD29, "B", "Brother Asterión (Second encounter)"),
+        Tuple.Create<uint, string, string>(0xAB8DC5F6, "B", "Crescencia, Duchess of the Sleeping Visage"),
     };
     print("Loaded " + roomInfo.Length + " rooms");
     vars.roomSplits = new List<uint>();
@@ -274,7 +283,9 @@ startup
         { 0x9AB9D533, "Eviterno doesn't work yet, sorry :(" },
         { 0x9AB9D532, "Incarnate Devotion" },
         { 0x45CB41B1, "Sor Cautiva del Silencio" },
-        { 0xA323CD29, "Brother Asterión" }
+        { 0xA323CD29, "Brother Asterión" },
+        { 0xAB8DC5F6, "Crescencia, Duchess of the Sleeping Visage" },
+        // Crescensia boss
     };
     print("Loaded " + bossInfo.Count + " bosses");
     vars.bossSplits = new List<uint>();
@@ -329,8 +340,8 @@ init
         case 69935104:  version = "2.1.0 (Non functional)";    break;
         case 69939200:  version = "2.1.1";    break;
         case 70152192:  version = "2.2.0";    break;
-        case 75292672:  version = "3.0.0 (Non functional)";    break;
-        case 75390976:  version = "3.0.1 (Non functional)";    break;
+        case 75292672:  version = "3.0.0";    break;
+        case 75390976:  version = "3.0.1";    break;
         default:        version = "Unknown";  break;
     }
 }
