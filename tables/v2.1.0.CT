@@ -4,8 +4,9 @@
     <CheatEntry>
       <ID>14</ID>
       <Description>"isPlaying"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
       <VariableType>4 Bytes</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039C3120</Address>
       <Offsets>
         <Offset>190</Offset>
         <Offset>30</Offset>
@@ -17,8 +18,9 @@
       <ID>121</ID>
       <Description>"mainRoom1"</Description>
       <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
       <VariableType>4 Bytes</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039C3120</Address>
       <Offsets>
         <Offset>0</Offset>
         <Offset>28</Offset>
@@ -30,8 +32,9 @@
       <ID>10</ID>
       <Description>"mainRoom2"</Description>
       <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
       <VariableType>4 Bytes</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039C3120</Address>
       <Offsets>
         <Offset>0</Offset>
         <Offset>30</Offset>
@@ -44,7 +47,7 @@
       <Description>"bossDeath1"</Description>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039C3120</Address>
       <Offsets>
         <Offset>28</Offset>
         <Offset>180</Offset>
@@ -56,7 +59,7 @@
       <Description>"bossDeath2"</Description>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039C3120</Address>
       <Offsets>
         <Offset>2C</Offset>
         <Offset>180</Offset>
@@ -68,10 +71,48 @@
       <Description>"bossDeath3"</Description>
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Float</VariableType>
-      <Address>"GameAssembly.dll"+039C4120</Address>
+      <Address>"GameAssembly.dll"+039C3120</Address>
       <Offsets>
         <Offset>30</Offset>
         <Offset>180</Offset>
+        <Offset>B8</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>122</ID>
+      <Description>"inputBlocked"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"GameAssembly.dll"+039C3120</Address>
+      <Offsets>
+        <Offset>78</Offset>
+        <Offset>10</Offset>
+        <Offset>B8</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>123</ID>
+      <Description>"positionX"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>"GameAssembly.dll"+039C3120</Address>
+      <Offsets>
+        <Offset>0</Offset>
+        <Offset>60</Offset>
+        <Offset>5D0</Offset>
+        <Offset>B8</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>124</ID>
+      <Description>"positionY"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Float</VariableType>
+      <Address>"GameAssembly.dll"+039C3120</Address>
+      <Offsets>
+        <Offset>4</Offset>
+        <Offset>60</Offset>
+        <Offset>5D0</Offset>
         <Offset>B8</Offset>
       </Offsets>
     </CheatEntry>
