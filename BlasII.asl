@@ -314,8 +314,8 @@ init
         case 69935104:  version = "2.1.0 (Non functional)";    break;
         case 69939200:  version = "2.1.1";    break;
         case 70152192:  version = "2.2.0";    break;
-        case 75292672:  version = "3.0.0 (Non functional)";    break;
-        case 75390976:  version = "3.0.1 (Non functional)";    break;
+        case 75292672:  version = "3.0.0";    break;
+        case 75390976:  version = "3.0.1";    break;
         default:        version = "Unknown";  break;
     }
 }
