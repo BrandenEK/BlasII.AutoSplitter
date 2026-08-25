@@ -38,6 +38,32 @@ state("Blasphemous 2", "1.1.0")
     float    positionY : "GameAssembly.dll", 0x33A63D8, 0xB8, 0x548, 0x60, 0x04;
 }
 
+state("Blasphemous 2", "2.0.0")
+{
+    bool     isPlaying : "GameAssembly.dll", 0x039BEE48, 0xB8, 0xF8, 0x30, 0x190;
+    uint     mainRoom1 : "GameAssembly.dll", 0x039BEE48, 0xB8, 0x330, 0x28, 0x0;
+    uint     mainRoom2 : "GameAssembly.dll", 0x039BEE48, 0xB8, 0x5B8, 0x30, 0x0;
+    float   bossDeath1 : "GameAssembly.dll", 0x039BEE48, 0xB8, 0x178, 0x28;
+    float   bossDeath2 : "GameAssembly.dll", 0x039BEE48, 0xB8, 0x178, 0x2C;
+    float   bossDeath3 : "GameAssembly.dll", 0x039BEE48, 0xB8, 0x178, 0x30;
+    bool  inputBlocked : "GameAssembly.dll", 0x039BEE48, 0xB8, 0x10, 0x78;
+    float    positionX : "GameAssembly.dll", 0x039BEE48, 0xB8, 0x5C0, 0x60, 0x00;
+    float    positionY : "GameAssembly.dll", 0x039BEE48, 0xB8, 0x5C0, 0x60, 0x04;
+}
+
+state("Blasphemous 2", "2.1.0")
+{
+    bool     isPlaying : "GameAssembly.dll", 0x039C3120, 0xB8, 0xF8, 0x30, 0x190;
+    uint     mainRoom1 : "GameAssembly.dll", 0x039C3120, 0xB8, 0x340, 0x28, 0x0;
+    uint     mainRoom2 : "GameAssembly.dll", 0x039C3120, 0xB8, 0x5C8, 0x30, 0x0;
+    float   bossDeath1 : "GameAssembly.dll", 0x039C3120, 0xB8, 0x180, 0x28;
+    float   bossDeath2 : "GameAssembly.dll", 0x039C3120, 0xB8, 0x180, 0x2C;
+    float   bossDeath3 : "GameAssembly.dll", 0x039C3120, 0xB8, 0x180, 0x30;
+    bool  inputBlocked : "GameAssembly.dll", 0x039C3120, 0xB8, 0x10, 0x78;
+    float    positionX : "GameAssembly.dll", 0x039C3120, 0xB8, 0x5D0, 0x60, 0x00;
+    float    positionY : "GameAssembly.dll", 0x039C3120, 0xB8, 0x5D0, 0x60, 0x04;
+}
+
 state("Blasphemous 2", "2.1.1")
 {
     bool     isPlaying : "GameAssembly.dll", 0x39C4120, 0xB8, 0xF8, 0x30, 0x190;
@@ -335,8 +361,8 @@ init
     {
         case 62201856:  version = "1.0.5";    break;
         case 62459904:  version = "1.1.0";    break;
-        case 69918720:  version = "2.0.0 (Non functional)";    break;
-        case 69935104:  version = "2.1.0 (Non functional)";    break;
+        case 69918720:  version = "2.0.0";    break;
+        case 69935104:  version = "2.1.0";    break;
         case 69939200:  version = "2.1.1";    break;
         case 70152192:  version = "2.2.0";    break;
         case 75292672:  version = "3.0.0";    break;
